@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/core/constants/constants.dart';
 import 'package:news_app/core/utils/app_text.dart';
+
+import '../../../../config/route/routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -25,11 +28,14 @@ class _SplashScreenState extends State<SplashScreen> {
                 fit: BoxFit.cover,
               ),
             ),
-            AppText(
-              textStyle: Theme.of(context).textTheme.bodyMedium,
-              text: Constants.appName,
-              fontWeight: FontWeight.w700,
-              textSize: 24,
+            GestureDetector(
+              onTap: () => Navigator.pushNamed(context, Routes.signUpPage),
+              child: AppText(
+                textStyle: Theme.of(context).textTheme.titleMedium,
+                text: Constants.appName,
+                fontWeight: FontWeight.w700,
+                textSize: 24,
+              ),
             )
           ],
         ),
