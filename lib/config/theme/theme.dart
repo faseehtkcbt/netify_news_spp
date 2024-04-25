@@ -12,6 +12,10 @@ class AppTheme {
       fontSize: 16,
       decoration: TextDecoration.none);
 
+  static _border({Color color = AppPellete.borderColor}) => OutlineInputBorder(
+      borderRadius: BorderRadius.circular(5),
+      borderSide: BorderSide(color: color, width: 2));
+
   static const TextStyle lightTitleTextStyle = TextStyle(
       fontFamily: 'Poppins',
       color: AppPellete.textBlackColor,
@@ -22,10 +26,16 @@ class AppTheme {
   static const TextTheme lighTextTheme = TextTheme(
       titleMedium: lightTitleTextStyle, bodyMedium: lightBodyTextStyle);
 
-  static const InputDecoration lightInputDecoration = InputDecoration();
+  static final InputDecorationTheme lightInputDecoration = InputDecorationTheme(
+      contentPadding: const EdgeInsets.all(15),
+      enabledBorder: _border(),
+      errorBorder: _border(color: AppPellete.errorColor),
+      focusedBorder: _border(
+        color: AppPellete.themeColor,
+      ));
 
-  static dynamic lightTheme =
-      ThemeData.light(useMaterial3: true).copyWith(textTheme: lighTextTheme);
+  static dynamic lightTheme = ThemeData.light(useMaterial3: true).copyWith(
+      textTheme: lighTextTheme, inputDecorationTheme: lightInputDecoration);
 
   // dark theme
   static const TextStyle darkBodyTextStyle = TextStyle(
@@ -45,6 +55,14 @@ class AppTheme {
   static const TextTheme darkTextTheme =
       TextTheme(titleMedium: darkTitleTextStyle, bodyMedium: darkBodyTextStyle);
 
-  static dynamic darkTheme =
-      ThemeData.dark(useMaterial3: true).copyWith(textTheme: darkTextTheme);
+  static final InputDecorationTheme darkInputDecoration = InputDecorationTheme(
+      fillColor: AppPellete.darkFillColor,
+      filled: true,
+      contentPadding: const EdgeInsets.all(15),
+      enabledBorder: _border(color: AppPellete.darkFillColor),
+      errorBorder: _border(color: AppPellete.errorColor),
+      focusedBorder: _border(color: AppPellete.themeColor));
+
+  static dynamic darkTheme = ThemeData.dark(useMaterial3: true).copyWith(
+      textTheme: darkTextTheme, inputDecorationTheme: darkInputDecoration);
 }

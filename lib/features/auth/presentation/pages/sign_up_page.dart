@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/core/bloc/check_cubit/check_cubit.dart';
 import 'package:news_app/core/color_pallette/app_pallette.dart';
 import 'package:news_app/core/utils/app_text.dart';
 import 'package:news_app/core/utils/app_text_form_field.dart';
+import 'package:news_app/core/utils/email_validation.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -11,29 +14,189 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final textEditingController = TextEditingController();
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPswdController = TextEditingController();
+  final emailController = TextEditingController();
+  @override
+  void dispose() {
+    usernameController.clear();
+    emailController.clear();
+    passwordController.clear();
+    confirmPswdController.clear();
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AppText(
-              text: 'Hello!',
-              textStyle: Theme.of(context).textTheme.titleMedium,
-              textSize: 40,
-              textColor: AppPellete.themeColor,
-            ),
-            AppText(
-              text: 'SignUp to get Started',
-              textStyle: Theme.of(context).textTheme.bodyMedium,
-              textSize: 18,
-            ),
-            AppTextFormField(controller: TextEditingController())
-          ],
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppText(
+                text: 'Hello!',
+                textStyle: Theme.of(context).textTheme.titleMedium,
+                textSize: 40,
+                textColor: AppPellete.themeColor,
+              ),
+              AppText(
+                text: 'SignUp to get Started',
+                textStyle: Theme.of(context).textTheme.bodyMedium,
+                textSize: 18,
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              AppText(
+                text: 'UserName*',
+                textStyle: Theme.of(context).textTheme.bodyMedium,
+                textSize: 14,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              AppTextFormField(
+                controller: usernameController,
+                hintText: 'User Name',
+                textInputType: TextInputType.name,
+                filterPattern: RegExp('[a-z A-Z.]'),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Please enter the user name";
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              AppText(
+                text: 'Email*',
+                textStyle: Theme.of(context).textTheme.bodyMedium,
+                textSize: 14,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              AppTextFormField(
+                controller: emailController,
+                textInputType: TextInputType.text,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Please enter an email address";
+                  } else if (validateEmail(value)) {
+                    return "Please enter a valid email address";
+                  }
+                  return null;
+                },
+                hintText: 'Email',
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              AppText(
+                text: 'Password*',
+                textStyle: Theme.of(context).textTheme.bodyMedium,
+                textSize: 14,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              BlocProvider(
+                create: (context) => CheckCubit(),
+                child: BlocBuilder<CheckCubit, CheckState>(
+                  builder: (context, state) {
+                    if (state is CheckLoaded) {
+                      return AppTextFormField(
+                        controller: passwordController,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please enter a password";
+                          } else if (value.length < 8) {
+                            return "Password must contain least 8 characters";
+                          }
+                          return null;
+                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        hintText: 'Password',
+                        textInputType: TextInputType.visiblePassword,
+                        suffixIcon: GestureDetector(
+                            onTap: () {
+                              context
+                                  .read<CheckCubit>()
+                                  .onChecked(state.isChecked);
+                            },
+                            child: state.isChecked
+                                ? const Icon(Icons.visibility_rounded)
+                                : const Icon(Icons.visibility_off_rounded)),
+                        isObscure: state.isChecked,
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              AppText(
+                text: 'Confirm Password*',
+                textStyle: Theme.of(context).textTheme.bodyMedium,
+                textSize: 14,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              BlocProvider(
+                create: (context) => CheckCubit(),
+                child: BlocBuilder<CheckCubit, CheckState>(
+                  builder: (context, state) {
+                    if (state is CheckLoaded) {
+                      return AppTextFormField(
+                        controller: confirmPswdController,
+                        hintText: 'Confirm Password',
+                        isObscure: state.isChecked,
+                        textInputType: TextInputType.visiblePassword,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please enter a password";
+                          } else if (value.length < 8) {
+                            return "Password must contain least 8 characters";
+                          } else if (value != passwordController.text) {
+                            return "Password and Confirm password are must be same";
+                          }
+                          return null;
+                        },
+                        suffixIcon: GestureDetector(
+                            onTap: () {
+                              context
+                                  .read<CheckCubit>()
+                                  .onChecked(state.isChecked);
+                            },
+                            child: state.isChecked
+                                ? const Icon(Icons.visibility_rounded)
+                                : const Icon(Icons.visibility_off_rounded)),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
         ),
       )),
     );

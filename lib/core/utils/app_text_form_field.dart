@@ -3,8 +3,11 @@ import 'package:flutter/services.dart';
 
 class AppTextFormField extends StatefulWidget {
   final TextEditingController controller;
+  final bool isObscure;
   final TextInputType textInputType;
   final TextCapitalization textCapitalization;
+  final String hintText;
+  final Widget? suffixIcon;
   String? Function(String?)? validator;
   void Function(String)? onChanged;
   Pattern? filterPattern;
@@ -12,12 +15,15 @@ class AppTextFormField extends StatefulWidget {
   AppTextFormField(
       {super.key,
       required this.controller,
+      this.suffixIcon,
+      required this.hintText,
       this.textInputType = TextInputType.text,
       this.textCapitalization = TextCapitalization.none,
       this.validator,
       this.onChanged,
       this.autovalidateMode = AutovalidateMode.disabled,
-      this.filterPattern});
+      this.filterPattern,
+      this.isObscure = false});
 
   @override
   State<AppTextFormField> createState() => _AppTextFormFieldState();
@@ -28,8 +34,10 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      style: Theme.of(context).textTheme.bodyMedium,
-      decoration: InputDecoration(),
+      obscureText: widget.isObscure,
+      style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 14),
+      decoration: InputDecoration(
+          hintText: widget.hintText, suffixIcon: widget.suffixIcon),
       keyboardType: widget.textInputType,
       textCapitalization: widget.textCapitalization,
       validator: widget.validator,

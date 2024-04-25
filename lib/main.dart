@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/config/theme/theme.dart';
 import 'package:news_app/core/constants/constants.dart';
 import 'package:news_app/features/splash/presentation/pages/splash_page.dart';
 import 'package:news_app/init_dependancy.dart';
 import 'config/route/routes.dart';
+import 'core/bloc/providers/bloc_providers.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initDependancies();
+  await initDependencies();
   runApp(const MyApp());
 }
 
