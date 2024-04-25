@@ -1,35 +1,24 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/config/route/routes.dart';
-import 'package:news_app/core/bloc/check_cubit/check_cubit.dart';
-import 'package:news_app/core/color_pallette/app_pallette.dart';
-import 'package:news_app/core/utils/app_text.dart';
-import 'package:news_app/core/utils/app_text_form_field.dart';
-import 'package:news_app/core/utils/email_validation.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+import '../../../../config/route/routes.dart';
+import '../../../../core/bloc/check_cubit/check_cubit.dart';
+import '../../../../core/color_pallette/app_pallette.dart';
+import '../../../../core/utils/app_text.dart';
+import '../../../../core/utils/app_text_form_field.dart';
+import '../../../../core/utils/email_validation.dart';
+
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmPswdController = TextEditingController();
-  final emailController = TextEditingController();
+class _SignInPageState extends State<SignInPage> {
   final formKey = GlobalKey<FormState>();
-  @override
-  void dispose() {
-    usernameController.clear();
-    emailController.clear();
-    passwordController.clear();
-    confirmPswdController.clear();
-    // TODO: implement dispose
-    super.dispose();
-  }
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,42 +34,25 @@ class _SignUpPageState extends State<SignUpPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppText(
-                  text: 'Hello!',
+                  text: 'Hello',
                   textStyle: Theme.of(context).textTheme.titleMedium,
-                  textSize: 40,
                   textColor: AppPellete.themeColor,
+                  textSize: 40,
                 ),
                 AppText(
-                  text: 'SignUp to get Started',
+                  text: 'Again!',
+                  textStyle: Theme.of(context).textTheme.titleMedium,
+                  textSize: 35,
+                ),
+                AppText(
+                  text: 'Welcome back you\'ve \nbeen missed',
                   textStyle: Theme.of(context).textTheme.bodyMedium,
-                  textColor: AppPellete.textGreyColor,
                   textSize: 16,
+                  textColor: AppPellete.textGreyColor,
+                  maxLines: 2,
                 ),
                 const SizedBox(
                   height: 50,
-                ),
-                AppText(
-                  text: 'UserName*',
-                  textStyle: Theme.of(context).textTheme.bodyMedium,
-                  textSize: 14,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                AppTextFormField(
-                  controller: usernameController,
-                  hintText: 'User Name',
-                  textInputType: TextInputType.name,
-                  filterPattern: RegExp('[a-z A-Z.]'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please enter the user name";
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 10,
                 ),
                 AppText(
                   text: 'Email*',
@@ -153,51 +125,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                AppText(
-                  text: 'Confirm Password*',
-                  textStyle: Theme.of(context).textTheme.bodyMedium,
-                  textSize: 14,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                BlocProvider(
-                  create: (context) => CheckCubit(),
-                  child: BlocBuilder<CheckCubit, CheckState>(
-                    builder: (context, state) {
-                      if (state is CheckLoaded) {
-                        return AppTextFormField(
-                          controller: confirmPswdController,
-                          hintText: 'Confirm Password',
-                          isObscure: state.isChecked,
-                          textInputType: TextInputType.visiblePassword,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Please enter a password";
-                            } else if (value.length < 8) {
-                              return "Password must contain least 8 characters";
-                            } else if (value != passwordController.text) {
-                              return "Password and Confirm password are must be same";
-                            }
-                            return null;
-                          },
-                          suffixIcon: GestureDetector(
-                              onTap: () {
-                                context
-                                    .read<CheckCubit>()
-                                    .onChecked(state.isChecked);
-                              },
-                              child: state.isChecked
-                                  ? const Icon(Icons.visibility_rounded)
-                                  : const Icon(Icons.visibility_off_rounded)),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                        );
-                      } else {
-                        return Container();
-                      }
-                    },
-                  ),
-                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -209,7 +136,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         if (formKey.currentState!.validate()) {}
                       },
                       child: AppText(
-                        text: "Sign Up",
+                        text: "Sign In",
                         fontWeight: FontWeight.w600,
                         textStyle: Theme.of(context).textTheme.bodyMedium,
                         textColor: AppPellete.textWhiteColor,
@@ -220,17 +147,17 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 GestureDetector(
                   onTap: () => Navigator.pushNamedAndRemoveUntil(
-                      context, Routes.signInPage, (route) => false),
+                      context, Routes.signUpPage, (route) => false),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       AppText(
-                        text: "Already have an Account? ",
+                        text: "Don\'t have an Account? ",
                         textStyle: Theme.of(context).textTheme.bodyMedium,
                         textSize: 13,
                       ),
                       AppText(
-                        text: "Login ",
+                        text: "Sign Up ",
                         textSize: 13,
                         textStyle: Theme.of(context).textTheme.bodyMedium,
                         fontWeight: FontWeight.w600,
