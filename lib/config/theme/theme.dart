@@ -23,8 +23,17 @@ class AppTheme {
       fontSize: 22,
       decoration: TextDecoration.none);
 
-  static const TextTheme lighTextTheme = TextTheme(
+  static const TextTheme lightTextTheme = TextTheme(
       titleMedium: lightTitleTextStyle, bodyMedium: lightBodyTextStyle);
+
+  static final ElevatedButtonThemeData lightButtonThemeData =
+      ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+              backgroundColor: AppPellete.themeColor,
+              fixedSize: const Size(double.infinity, 60),
+              textStyle: lightBodyTextStyle,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10))));
 
   static final InputDecorationTheme lightInputDecoration = InputDecorationTheme(
       contentPadding: const EdgeInsets.all(15),
@@ -35,7 +44,9 @@ class AppTheme {
       ));
 
   static dynamic lightTheme = ThemeData.light(useMaterial3: true).copyWith(
-      textTheme: lighTextTheme, inputDecorationTheme: lightInputDecoration);
+      textTheme: lightTextTheme,
+      inputDecorationTheme: lightInputDecoration,
+      elevatedButtonTheme: lightButtonThemeData);
 
   // dark theme
   static const TextStyle darkBodyTextStyle = TextStyle(
@@ -55,6 +66,15 @@ class AppTheme {
   static const TextTheme darkTextTheme =
       TextTheme(titleMedium: darkTitleTextStyle, bodyMedium: darkBodyTextStyle);
 
+  static final ElevatedButtonThemeData darkButtonThemeData =
+      ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+              backgroundColor: AppPellete.themeColor,
+              fixedSize: const Size(double.infinity, 60),
+              textStyle: lightBodyTextStyle,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10))));
+
   static final InputDecorationTheme darkInputDecoration = InputDecorationTheme(
       fillColor: AppPellete.darkFillColor,
       filled: true,
@@ -64,5 +84,7 @@ class AppTheme {
       focusedBorder: _border(color: AppPellete.themeColor));
 
   static dynamic darkTheme = ThemeData.dark(useMaterial3: true).copyWith(
-      textTheme: darkTextTheme, inputDecorationTheme: darkInputDecoration);
+      textTheme: darkTextTheme,
+      inputDecorationTheme: darkInputDecoration,
+      elevatedButtonTheme: darkButtonThemeData);
 }
