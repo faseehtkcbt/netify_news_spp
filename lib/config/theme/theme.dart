@@ -44,6 +44,9 @@ class AppTheme {
 
   static dynamic lightTheme = ThemeData.light(useMaterial3: true).copyWith(
       textTheme: lightTextTheme,
+      appBarTheme: const AppBarTheme().copyWith(
+        titleTextStyle: lightTitleTextStyle,
+      ),
       inputDecorationTheme: lightInputDecoration,
       elevatedButtonTheme: lightButtonThemeData);
 
@@ -83,6 +86,9 @@ class AppTheme {
 
   static dynamic darkTheme = ThemeData.dark(useMaterial3: true).copyWith(
       textTheme: darkTextTheme,
+      appBarTheme: const AppBarTheme().copyWith(
+        titleTextStyle: darkTitleTextStyle,
+      ),
       inputDecorationTheme: darkInputDecoration,
       elevatedButtonTheme: darkButtonThemeData);
 }

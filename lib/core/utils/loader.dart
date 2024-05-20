@@ -12,9 +12,9 @@ class _LoaderState extends State<Loader> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(5),
-      height: 40,
-      width: 40,
+      padding: const EdgeInsets.all(10),
+      height: 60,
+      width: 60,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           color: AppPellete.textWhiteColor),

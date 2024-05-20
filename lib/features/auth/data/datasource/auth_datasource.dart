@@ -37,8 +37,10 @@ class AuthDatasouceImpl implements AuthDataSource {
       required String password,
       required String username}) async {
     try {
-      final response = await supabaseClient.auth
-          .signUp(password: password, email: email, data: {'name': username});
+      final response = await supabaseClient.auth.signUp(
+          password: password,
+          email: email,
+          data: {'name': username, 'image_url': ''});
       if (response.user == null) {
         throw ServerExceptions("User is Null");
       }

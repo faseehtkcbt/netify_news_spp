@@ -3,12 +3,31 @@ class Constants {
 
   static const String appName = 'Nifty News';
 
-  /// --------------------- image declaration------------------- ///
+  static const List<String> categories = [
+    'All',
+    'Business',
+    'Entertainment',
+    'Health',
+    'Sceince',
+    'Sports',
+    'Technology'
+  ];
+
+  /// --------------------- Api Constants ---------------------- ///
+  static const String baseUrl = 'https://newsapi.org/v2';
+
+  static const String everything = '$baseUrl/everything';
+  static const String topHeadLines = '$baseUrl/top-headlines';
+  static const String sources = '$topHeadLines/sources';
+
+  ///----------------------------------------------------------- ///
+  /// --------------------- image declaration ------------------ ///
 
   static const String appIcon = 'assets/images/app_icon.png';
   static const String splashImage_1 = 'assets/images/splash_image_1.png';
   static const String splashImage_2 = 'assets/images/splash_image_2.png';
   static const String splashImage_3 = 'assets/images/splash_image_3.png';
+  static const String demoImage = 'assets/images/download.jpeg';
 
   ///-----------------------------------------------------------///
 

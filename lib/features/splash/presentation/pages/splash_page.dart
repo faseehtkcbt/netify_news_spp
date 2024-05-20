@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             GestureDetector(
               onTap: () => Navigator.pushNamedAndRemoveUntil(
-                  context, Routes.signUpPage, (route) => false),
+                  context, Routes.homeScreen, (route) => false),
               child: AppText(
                 textStyle: Theme.of(context).textTheme.titleMedium,
                 text: Constants.appName,

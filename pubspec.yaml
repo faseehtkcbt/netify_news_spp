@@ -43,6 +43,7 @@ dependencies:
   dartz: ^0.10.1
   html_editor_enhanced: ^2.5.1
   supabase_flutter:
+  internet_connection_checker_plus: 
 
 dev_dependencies:
   flutter_test:

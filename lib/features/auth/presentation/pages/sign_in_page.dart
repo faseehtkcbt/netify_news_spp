@@ -40,7 +40,7 @@ class _SignInPageState extends State<SignInPage> {
         },
         builder: (context, authState) {
           if (authState is AuthLoading) {
-            return const Loader();
+            return const Center(child: Loader());
           }
           return SafeArea(
               child: Padding(
