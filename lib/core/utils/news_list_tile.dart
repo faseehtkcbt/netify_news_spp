@@ -60,34 +60,37 @@ class NewsListTile extends StatelessWidget {
                   const SizedBox(
                     height: 2,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      NetworkIcon(
-                        url: getFavIcon(newsEntity.url ?? ""),
-                        radius: 20,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      AppText(
-                        text: newsEntity.source.name ?? "",
-                        textStyle: Theme.of(context).textTheme.bodyMedium,
-                        textSize: 12,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      AppText(
-                        text: newsEntity.publishedAt!.split('T').first,
-                        textStyle: Theme.of(context).textTheme.bodyMedium,
-                        textSize: 12,
-                        fontWeight: FontWeight.w500,
-                        textColor: AppPellete.borderColor,
-                      ),
-                    ],
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        NetworkIcon(
+                          url: getFavIcon(newsEntity.url ?? ""),
+                          radius: 20,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        AppText(
+                          text: newsEntity.source.name ?? "",
+                          textStyle: Theme.of(context).textTheme.bodyMedium,
+                          textSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        AppText(
+                          text: newsEntity.publishedAt!.split('T').first,
+                          textStyle: Theme.of(context).textTheme.bodyMedium,
+                          textSize: 12,
+                          fontWeight: FontWeight.w500,
+                          textColor: AppPellete.borderColor,
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),

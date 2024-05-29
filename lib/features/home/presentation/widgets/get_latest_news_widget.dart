@@ -31,14 +31,19 @@ class _GetLatestNewsWidgetState extends State<GetLatestNewsWidget> {
                   text: 'ERROR',
                   textStyle: Theme.of(context).textTheme.bodyMedium));
         } else if (newsState is NewsLoaded) {
-          return ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return NewsListTile(newsEntity: newsState.news[index]);
-            },
-            shrinkWrap: true,
-            itemCount: newsState.news.length,
-          );
+          return newsState.news.isNotEmpty
+              ? ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return NewsListTile(newsEntity: newsState.news[index]);
+                  },
+                  shrinkWrap: true,
+                  itemCount: newsState.news.length,
+                )
+              : Center(
+                  child: AppText(
+                      text: 'No updates on this subject',
+                      textStyle: Theme.of(context).textTheme.bodyMedium));
         } else {
           return const Center(
             child: Loader(),

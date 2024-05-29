@@ -44,6 +44,7 @@ dependencies:
   html_editor_enhanced: ^2.5.1
   supabase_flutter:
   internet_connection_checker_plus: 
+  url_launcher: ^6.2.6
 
 dev_dependencies:
   flutter_test:

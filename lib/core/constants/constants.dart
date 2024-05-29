@@ -8,7 +8,7 @@ class Constants {
     'Business',
     'Entertainment',
     'Health',
-    'Sceince',
+    'Science',
     'Sports',
     'Technology'
   ];

@@ -5,12 +5,14 @@ import '../../core/color_pallette/app_pallette.dart';
 class AppTheme {
   // light theme
 
-  static const TextStyle lightBodyTextStyle = TextStyle(
-      fontFamily: 'Poppins',
-      color: AppPellete.textBlackColor,
-      fontWeight: FontWeight.w400,
-      fontSize: 16,
-      decoration: TextDecoration.none);
+  static TextStyle lightBodyTextStyle(
+          {Color? color, double? size, FontWeight? fontWeight}) =>
+      TextStyle(
+          fontFamily: 'Poppins',
+          color: color ?? AppPellete.textBlackColor,
+          fontWeight: fontWeight ?? FontWeight.w400,
+          fontSize: size ?? 16,
+          decoration: TextDecoration.none);
 
   static _border({Color color = AppPellete.borderColor}) => OutlineInputBorder(
       borderRadius: BorderRadius.circular(5),
@@ -23,8 +25,8 @@ class AppTheme {
       fontSize: 22,
       decoration: TextDecoration.none);
 
-  static const TextTheme lightTextTheme = TextTheme(
-      titleMedium: lightTitleTextStyle, bodyMedium: lightBodyTextStyle);
+  static TextTheme lightTextTheme = TextTheme(
+      titleMedium: lightTitleTextStyle, bodyMedium: lightBodyTextStyle());
 
   static final ElevatedButtonThemeData lightButtonThemeData =
       ElevatedButtonThemeData(
@@ -33,6 +35,30 @@ class AppTheme {
               fixedSize: const Size(300, 50),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10))));
+
+  static BottomNavigationBarThemeData lightBottomBarTheme =
+      BottomNavigationBarThemeData(
+    selectedLabelStyle: lightBodyTextStyle(
+        color: AppPellete.themeColor, size: 13, fontWeight: FontWeight.w500),
+    type: BottomNavigationBarType.fixed,
+    selectedIconTheme:
+        const IconThemeData(size: 22, color: AppPellete.themeColor),
+    unselectedIconTheme:
+        const IconThemeData(size: 22, color: AppPellete.textBlackColor),
+    unselectedLabelStyle: lightBodyTextStyle(
+        color: AppPellete.textBlackColor,
+        size: 13,
+        fontWeight: FontWeight.w500),
+  );
+
+  static TabBarTheme lightTabTheme = TabBarTheme(
+      indicatorColor: AppPellete.themeColor,
+      labelColor: AppPellete.themeColor,
+      unselectedLabelColor: AppPellete.textBlackColor,
+      labelStyle: lightBodyTextStyle(
+          color: AppPellete.themeColor, fontWeight: FontWeight.w500),
+      unselectedLabelStyle: lightBodyTextStyle(
+          color: AppPellete.textBlackColor, fontWeight: FontWeight.w500));
 
   static final InputDecorationTheme lightInputDecoration = InputDecorationTheme(
       contentPadding: const EdgeInsets.all(15),
@@ -44,19 +70,24 @@ class AppTheme {
 
   static dynamic lightTheme = ThemeData.light(useMaterial3: true).copyWith(
       textTheme: lightTextTheme,
+      bottomNavigationBarTheme: lightBottomBarTheme,
       appBarTheme: const AppBarTheme().copyWith(
         titleTextStyle: lightTitleTextStyle,
       ),
+      tabBarTheme: lightTabTheme,
       inputDecorationTheme: lightInputDecoration,
       elevatedButtonTheme: lightButtonThemeData);
+  // --------------------------------------------------------------------------------------------------//
 
   // dark theme
-  static const TextStyle darkBodyTextStyle = TextStyle(
-      fontFamily: 'Poppins',
-      color: AppPellete.textWhiteColor,
-      fontWeight: FontWeight.w400,
-      fontSize: 16,
-      decoration: TextDecoration.none);
+  static TextStyle darkBodyTextStyle(
+          {Color? color, double? size, FontWeight? fontWeight}) =>
+      TextStyle(
+          fontFamily: 'Poppins',
+          color: color ?? AppPellete.textWhiteColor,
+          fontWeight: fontWeight ?? FontWeight.w400,
+          fontSize: size ?? 16,
+          decoration: TextDecoration.none);
 
   static const TextStyle darkTitleTextStyle = TextStyle(
       fontFamily: 'Poppins',
@@ -65,8 +96,8 @@ class AppTheme {
       fontSize: 22,
       decoration: TextDecoration.none);
 
-  static const TextTheme darkTextTheme =
-      TextTheme(titleMedium: darkTitleTextStyle, bodyMedium: darkBodyTextStyle);
+  static TextTheme darkTextTheme = TextTheme(
+      titleMedium: darkTitleTextStyle, bodyMedium: darkBodyTextStyle());
 
   static final ElevatedButtonThemeData darkButtonThemeData =
       ElevatedButtonThemeData(
@@ -84,11 +115,37 @@ class AppTheme {
       errorBorder: _border(color: AppPellete.errorColor),
       focusedBorder: _border(color: AppPellete.themeColor));
 
+  static BottomNavigationBarThemeData darkBottomBarTheme =
+      BottomNavigationBarThemeData(
+    selectedLabelStyle: darkBodyTextStyle(
+        color: AppPellete.themeColor, size: 13, fontWeight: FontWeight.w500),
+    type: BottomNavigationBarType.fixed,
+    selectedIconTheme:
+        const IconThemeData(size: 22, color: AppPellete.themeColor),
+    unselectedIconTheme:
+        const IconThemeData(size: 22, color: AppPellete.textWhiteColor),
+    unselectedLabelStyle: darkBodyTextStyle(
+        color: AppPellete.textWhiteColor,
+        size: 13,
+        fontWeight: FontWeight.w500),
+  );
+
+  static TabBarTheme darkTabTheme = TabBarTheme(
+      indicatorColor: AppPellete.themeColor,
+      labelColor: AppPellete.themeColor,
+      unselectedLabelColor: AppPellete.textWhiteColor,
+      labelStyle: darkBodyTextStyle(
+          color: AppPellete.themeColor, fontWeight: FontWeight.w500),
+      unselectedLabelStyle: darkBodyTextStyle(
+          color: AppPellete.textWhiteColor, fontWeight: FontWeight.w500));
+
   static dynamic darkTheme = ThemeData.dark(useMaterial3: true).copyWith(
       textTheme: darkTextTheme,
+      bottomNavigationBarTheme: darkBottomBarTheme,
       appBarTheme: const AppBarTheme().copyWith(
         titleTextStyle: darkTitleTextStyle,
       ),
+      tabBarTheme: darkTabTheme,
       inputDecorationTheme: darkInputDecoration,
       elevatedButtonTheme: darkButtonThemeData);
 }

@@ -3,6 +3,7 @@ import 'package:news_app/core/color_pallette/app_pallette.dart';
 import 'package:news_app/core/entity/news_entity.dart';
 import 'package:news_app/core/utils/app_text.dart';
 import 'package:news_app/core/utils/get_fav_icon.dart';
+import 'package:news_app/core/utils/launch_in_app.dart';
 import 'package:news_app/core/utils/network_icon.dart';
 import 'package:news_app/core/utils/network_image.dart';
 
@@ -35,23 +36,37 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                   const SizedBox(
                     width: 10,
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AppText(
-                        text: widget.newsEntity.source.name ?? "",
-                        textStyle: Theme.of(context).textTheme.bodyMedium,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      AppText(
-                        text: widget.newsEntity.publishedAt!.split('T').first,
-                        textStyle: Theme.of(context).textTheme.bodyMedium,
-                        textSize: 13,
-                        textColor: AppPellete.borderColor,
-                      )
-                    ],
-                  )
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AppText(
+                          text: widget.newsEntity.source.name ?? "",
+                          textStyle: Theme.of(context).textTheme.bodyMedium,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        AppText(
+                          text: widget.newsEntity.publishedAt!.split('T').first,
+                          textStyle: Theme.of(context).textTheme.bodyMedium,
+                          textSize: 13,
+                          textColor: AppPellete.borderColor,
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  IconButton(
+                      onPressed: () async {
+                        await UrlLauncherMethods().launchInBrowserView(
+                            Uri.parse(widget.newsEntity.url ?? ""));
+                      },
+                      icon: const Icon(Icons.open_in_browser_outlined)),
+                  IconButton(
+                      onPressed: () async {},
+                      icon: const Icon(Icons.bookmark_border_sharp))
                 ],
               ),
               const SizedBox(

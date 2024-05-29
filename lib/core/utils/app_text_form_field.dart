@@ -10,6 +10,7 @@ class AppTextFormField extends StatefulWidget {
   final Widget? suffixIcon;
   String? Function(String?)? validator;
   void Function(String)? onChanged;
+  void Function(String)? onFieldSubmitted;
   Pattern? filterPattern;
   final AutovalidateMode autovalidateMode;
   AppTextFormField(
@@ -21,6 +22,7 @@ class AppTextFormField extends StatefulWidget {
       this.textCapitalization = TextCapitalization.none,
       this.validator,
       this.onChanged,
+      this.onFieldSubmitted,
       this.autovalidateMode = AutovalidateMode.disabled,
       this.filterPattern,
       this.isObscure = false});
@@ -42,6 +44,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
       textCapitalization: widget.textCapitalization,
       validator: widget.validator,
       onChanged: widget.onChanged,
+      onFieldSubmitted: widget.onFieldSubmitted,
       autovalidateMode: widget.autovalidateMode,
       inputFormatters: [
         FilteringTextInputFormatter.allow(

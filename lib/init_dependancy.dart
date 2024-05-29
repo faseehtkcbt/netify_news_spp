@@ -7,6 +7,12 @@ import 'package:news_app/features/auth/domain/repository/auth_repository.dart';
 import 'package:news_app/features/auth/domain/usecase/login_usecase.dart';
 import 'package:news_app/features/auth/domain/usecase/register_usecase.dart';
 import 'package:news_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:news_app/features/explore/data/datasource/explore_datasource.dart';
+import 'package:news_app/features/explore/data/repository_impl/explore_repository_impl.dart';
+import 'package:news_app/features/explore/domain/repository/explore_repository.dart';
+import 'package:news_app/features/explore/domain/usecase/get_query_news.dart';
+import 'package:news_app/features/explore/domain/usecase/get_sources.dart';
+import 'package:news_app/features/explore/presentation/bloc/explore_bloc.dart';
 import 'package:news_app/features/home/data/datasource/datasource.dart';
 import 'package:news_app/features/home/data/repo_impl/news_repo_impl.dart';
 import 'package:news_app/features/home/domain/repository/news_repository.dart';
@@ -58,5 +64,16 @@ void _initNews() {
     ..registerLazySingleton<NewsBloc>(
         () => NewsBloc(serviceLocator<GetLatestNews>()))
     ..registerLazySingleton<TrendingBloc>(
-        () => TrendingBloc(serviceLocator<GetTrendingNews>()));
+        () => TrendingBloc(serviceLocator<GetTrendingNews>()))
+    ..registerFactory<ExploreDatasource>(
+        () => ExploreDataSourceImpl(serviceLocator<ConnectionChecker>()))
+    ..registerFactory<ExploreRepository>(
+        () => ExploreRepositoryImpl(serviceLocator<ExploreDatasource>()))
+    ..registerFactory<GetQueryNews>(
+        () => GetQueryNews(serviceLocator<ExploreRepository>()))
+    ..registerFactory<GetSourcesDetails>(
+        () => GetSourcesDetails(serviceLocator<ExploreRepository>()))
+    ..registerLazySingleton<ExploreBloc>(() => ExploreBloc(
+        getQueryNews: serviceLocator<GetQueryNews>(),
+        getSourcesDetails: serviceLocator<GetSourcesDetails>()));
 }

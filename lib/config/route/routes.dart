@@ -3,7 +3,7 @@ import 'package:news_app/core/entity/news_entity.dart';
 import 'package:news_app/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:news_app/features/auth/presentation/pages/sign_up_page.dart';
 import 'package:news_app/features/detailPage/presentation/pages/news_detail_page.dart';
-import 'package:news_app/features/home/presentation/pages/homescreen.dart';
+import 'package:news_app/features/home/presentation/pages/home_page.dart';
 import 'package:news_app/features/home/presentation/pages/latests.dart';
 import 'package:news_app/features/home/presentation/pages/trendings.dart';
 import 'package:news_app/features/splash/presentation/pages/splash_page.dart';
@@ -23,7 +23,7 @@ class Routes {
     splashScreen: (BuildContext context) => const SplashScreen(),
     signUpPage: (BuildContext context) => const SignUpPage(),
     signInPage: (BuildContext context) => const SignInPage(),
-    homeScreen: (BuildContext context) => const HomeScreen(),
+    homeScreen: (BuildContext context) => const HomePage(),
     trending: (BuildContext context) => const Trending(),
     latest: (BuildContext context) => const Latests(),
     detailPage: (BuildContext context) {

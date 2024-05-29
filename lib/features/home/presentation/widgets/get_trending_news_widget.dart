@@ -18,7 +18,6 @@ class _GetTrendingNewsWidgetState extends State<GetTrendingNewsWidget> {
   @override
   void initState() {
     context.read<TrendingBloc>().add(GetTrendings());
-
     // TODO: implement initState
     super.initState();
   }

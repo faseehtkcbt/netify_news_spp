@@ -30,65 +30,63 @@ class _HomeScreenState extends State<HomeScreen> {
           textSize: 25,
         ),
       ),
-      body: Scaffold(
-        body: Container(
-          height: double.infinity,
-          width: double.infinity,
-          padding: const EdgeInsets.all(15),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    AppText(
-                      text: 'Trending',
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        padding: const EdgeInsets.all(15),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  AppText(
+                    text: 'Trending',
+                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                    textSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, Routes.trending);
+                    },
+                    child: AppText(
+                      text: 'See all',
                       textStyle: Theme.of(context).textTheme.bodyMedium,
-                      textSize: 16,
-                      fontWeight: FontWeight.w600,
+                      textColor: AppPellete.themeColor,
+                      textSize: 14,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, Routes.trending);
-                      },
-                      child: AppText(
-                        text: 'See all',
-                        textStyle: Theme.of(context).textTheme.bodyMedium,
-                        textColor: AppPellete.themeColor,
-                        textSize: 14,
-                      ),
-                    )
-                  ],
-                ),
-                const GetTrendingNewsWidget(),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    AppText(
-                      text: 'Latest',
+                  )
+                ],
+              ),
+              const GetTrendingNewsWidget(),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  AppText(
+                    text: 'Latest',
+                    textStyle: Theme.of(context).textTheme.bodyMedium,
+                    textSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, Routes.latest);
+                    },
+                    child: AppText(
+                      text: 'See all',
                       textStyle: Theme.of(context).textTheme.bodyMedium,
-                      textSize: 16,
-                      fontWeight: FontWeight.w600,
+                      textColor: AppPellete.themeColor,
+                      textSize: 14,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, Routes.latest);
-                      },
-                      child: AppText(
-                        text: 'See all',
-                        textStyle: Theme.of(context).textTheme.bodyMedium,
-                        textColor: AppPellete.themeColor,
-                        textSize: 14,
-                      ),
-                    )
-                  ],
-                ),
-                const GetLatestNewsWidget()
-              ],
-            ),
+                  )
+                ],
+              ),
+              const GetLatestNewsWidget()
+            ],
           ),
         ),
       ),
