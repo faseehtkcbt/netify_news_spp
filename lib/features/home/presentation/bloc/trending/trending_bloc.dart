@@ -1,10 +1,9 @@
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/entity/news_entity.dart';
-import '../../../../../core/failure/Failures.dart';
+import '../../../../../core/failure/failures.dart';
 import '../../../../../core/usecase/usecase.dart';
-import '../../../domain/usecase/getTrendingNews.dart';
+import '../../../domain/usecase/get_trending_news.dart';
 
 part 'trending_event.dart';
 part 'trending_state.dart';

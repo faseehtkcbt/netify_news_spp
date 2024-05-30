@@ -5,7 +5,6 @@ import 'package:news_app/features/home/presentation/bloc/trending/trending_bloc.
 import '../../../../core/utils/app_text.dart';
 import '../../../../core/utils/loader.dart';
 import '../../../../core/utils/news_card.dart';
-import '../bloc/latest/news_bloc.dart';
 
 class GetTrendingNewsList extends StatefulWidget {
   const GetTrendingNewsList({super.key});

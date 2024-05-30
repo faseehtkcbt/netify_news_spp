@@ -52,7 +52,7 @@ class _ExplorePageState extends State<ExplorePage>
               height: 30,
             ),
             Expanded(
-              child: TabBarView(controller: _tabController, children: [
+              child: TabBarView(controller: _tabController, children: const [
                 QueryNewsWidget(),
                 QueryNewsWidget(),
                 SourceDetailsList(),

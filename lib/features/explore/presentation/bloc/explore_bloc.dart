@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/entity/news_entity.dart';
-import 'package:news_app/core/failure/Failures.dart';
+import 'package:news_app/core/failure/failures.dart';
 import 'package:news_app/features/explore/domain/usecase/get_query_news.dart';
 
 import '../../domain/usecase/get_recent_news.dart';

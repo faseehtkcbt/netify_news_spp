@@ -1,6 +1,5 @@
 part of 'selection_cubit.dart';
 
-@immutable
 abstract class SelectionState {}
 
 class SelectionInitial extends SelectionState {

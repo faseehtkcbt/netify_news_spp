@@ -1,8 +1,7 @@
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
-import 'package:news_app/core/failure/Failures.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/core/failure/failures.dart';
 import '../../../../../core/entity/news_entity.dart';
-import '../../../domain/usecase/grtLatest.dart';
+import '../../../domain/usecase/get_latest.dart';
 
 part 'news_event.dart';
 part 'news_state.dart';

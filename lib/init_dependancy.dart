@@ -18,8 +18,8 @@ import 'package:news_app/features/explore/presentation/bloc/source_bloc.dart';
 import 'package:news_app/features/home/data/datasource/datasource.dart';
 import 'package:news_app/features/home/data/repo_impl/news_repo_impl.dart';
 import 'package:news_app/features/home/domain/repository/news_repository.dart';
-import 'package:news_app/features/home/domain/usecase/getTrendingNews.dart';
-import 'package:news_app/features/home/domain/usecase/grtLatest.dart';
+import 'package:news_app/features/home/domain/usecase/get_trending_news.dart';
+import 'package:news_app/features/home/domain/usecase/get_latest.dart';
 import 'package:news_app/features/home/presentation/bloc/latest/news_bloc.dart';
 import 'package:news_app/features/home/presentation/bloc/trending/trending_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -75,9 +75,11 @@ void _initNews() {
         () => GetQueryNews(serviceLocator<ExploreRepository>()))
     ..registerFactory<GetSourcesDetails>(
         () => GetSourcesDetails(serviceLocator<ExploreRepository>()))
-    ..registerFactory<GetRecentNewses>(()=>GetRecentNewses(serviceLocator<ExploreRepository>()))
-    ..registerLazySingleton<ExploreBloc>(
-        () => ExploreBloc(getQueryNews: serviceLocator<GetQueryNews>(), getRecentNewses: serviceLocator<GetRecentNewses>()))
+    ..registerFactory<GetRecentNewses>(
+        () => GetRecentNewses(serviceLocator<ExploreRepository>()))
+    ..registerLazySingleton<ExploreBloc>(() => ExploreBloc(
+        getQueryNews: serviceLocator<GetQueryNews>(),
+        getRecentNewses: serviceLocator<GetRecentNewses>()))
     ..registerLazySingleton<SourceBloc>(() =>
         SourceBloc(getSourcesDetails: serviceLocator<GetSourcesDetails>()));
 }

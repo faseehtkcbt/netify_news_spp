@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/failure/Failures.dart';
+import '../../../../core/failure/failures.dart';
 import '../../../../core/usecase/usecase.dart';
 import '../../domain/usecase/get_sources.dart';
 

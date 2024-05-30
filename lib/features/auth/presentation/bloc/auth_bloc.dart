@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../domain/entity/user_entity.dart';
 import '../../domain/usecase/login_usecase.dart';
 import '../../domain/usecase/register_usecase.dart';

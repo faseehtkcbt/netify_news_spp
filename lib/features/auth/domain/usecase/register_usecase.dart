@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:news_app/core/failure/Failures.dart';
+import 'package:news_app/core/failure/failures.dart';
 import 'package:news_app/core/usecase/usecase.dart';
 
 import '../entity/user_entity.dart';
