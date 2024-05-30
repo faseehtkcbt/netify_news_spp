@@ -26,51 +26,54 @@ class _QueryNewsWidgetState extends State<QueryNewsWidget> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: AppTextFormField(
-              controller: searchController,
-              hintText: 'Type to explore news',
-              onFieldSubmitted: (value) {
-                context
-                    .read<ExploreBloc>()
-                    .add(QueryNews(value != '' ? value : 'general'));
-              },
+      child: SizedBox(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: AppTextFormField(
+                controller: searchController,
+                hintText: 'Type to explore news',
+                onFieldSubmitted: (value) {
+                  context
+                      .read<ExploreBloc>()
+                      .add(QueryNews(value != '' ? value : 'general'));
+                },
+              ),
             ),
-          ),
-          BlocConsumer<ExploreBloc, ExploreState>(
-            builder: (BuildContext context, newsState) {
-              if (newsState is ExploreFailure) {
-                return Center(
-                    child: AppText(
-                        text: 'ERROR',
-                        textStyle: Theme.of(context).textTheme.bodyMedium));
-              } else if (newsState is ExploreLoaded) {
-                return newsState.data.isNotEmpty
-                    ? ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return NewsListTile(
-                              newsEntity: newsState.data[index]);
-                        },
-                        shrinkWrap: true,
-                        itemCount: newsState.data.length,
-                      )
-                    : Center(
-                        child: AppText(
-                            text: 'No updates on this subject',
-                            textStyle: Theme.of(context).textTheme.bodyMedium));
-              } else {
-                return const Center(
-                  child: Loader(),
-                );
-              }
-            },
-            listener: (BuildContext context, Object? state) {},
-          ),
-        ],
+            BlocConsumer<ExploreBloc, ExploreState>(
+              builder: (BuildContext context, newsState) {
+                if (newsState is ExploreFailure) {
+                  return Center(
+                      child: AppText(
+                          text: 'ERROR',
+                          textStyle: Theme.of(context).textTheme.bodyMedium));
+                } else if (newsState is ExploreLoaded) {
+                  return newsState.data.isNotEmpty
+                      ? ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return NewsListTile(
+                                newsEntity: newsState.data[index]);
+                          },
+                          shrinkWrap: true,
+                          itemCount: newsState.data.length,
+                        )
+                      : Center(
+                          child: AppText(
+                              text: 'No updates on this subject',
+                              textStyle:
+                                  Theme.of(context).textTheme.bodyMedium));
+                } else {
+                  return const Center(
+                    child: Loader(),
+                  );
+                }
+              },
+              listener: (BuildContext context, Object? state) {},
+            ),
+          ],
+        ),
       ),
     );
   }

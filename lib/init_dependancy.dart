@@ -11,8 +11,10 @@ import 'package:news_app/features/explore/data/datasource/explore_datasource.dar
 import 'package:news_app/features/explore/data/repository_impl/explore_repository_impl.dart';
 import 'package:news_app/features/explore/domain/repository/explore_repository.dart';
 import 'package:news_app/features/explore/domain/usecase/get_query_news.dart';
+import 'package:news_app/features/explore/domain/usecase/get_recent_news.dart';
 import 'package:news_app/features/explore/domain/usecase/get_sources.dart';
 import 'package:news_app/features/explore/presentation/bloc/explore_bloc.dart';
+import 'package:news_app/features/explore/presentation/bloc/source_bloc.dart';
 import 'package:news_app/features/home/data/datasource/datasource.dart';
 import 'package:news_app/features/home/data/repo_impl/news_repo_impl.dart';
 import 'package:news_app/features/home/domain/repository/news_repository.dart';
@@ -73,7 +75,9 @@ void _initNews() {
         () => GetQueryNews(serviceLocator<ExploreRepository>()))
     ..registerFactory<GetSourcesDetails>(
         () => GetSourcesDetails(serviceLocator<ExploreRepository>()))
-    ..registerLazySingleton<ExploreBloc>(() => ExploreBloc(
-        getQueryNews: serviceLocator<GetQueryNews>(),
-        getSourcesDetails: serviceLocator<GetSourcesDetails>()));
+    ..registerFactory<GetRecentNewses>(()=>GetRecentNewses(serviceLocator<ExploreRepository>()))
+    ..registerLazySingleton<ExploreBloc>(
+        () => ExploreBloc(getQueryNews: serviceLocator<GetQueryNews>(), getRecentNewses: serviceLocator<GetRecentNewses>()))
+    ..registerLazySingleton<SourceBloc>(() =>
+        SourceBloc(getSourcesDetails: serviceLocator<GetSourcesDetails>()));
 }

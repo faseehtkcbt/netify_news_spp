@@ -6,8 +6,8 @@ class ExploreInitial extends ExploreState {}
 
 class ExploreLoading extends ExploreState {}
 
-class ExploreLoaded<SuccessType> extends ExploreState {
-  final List<SuccessType> data;
+class ExploreLoaded extends ExploreState {
+  final List<NewsEntity> data;
   ExploreLoaded(this.data);
 }
 

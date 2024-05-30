@@ -5,6 +5,7 @@ import 'package:news_app/core/failure/Failures.dart';
 import 'package:news_app/features/explore/data/datasource/explore_datasource.dart';
 import 'package:news_app/features/explore/data/model/source_detail_model.dart';
 import 'package:news_app/features/explore/domain/repository/explore_repository.dart';
+import 'package:news_app/features/home/data/model/news_model.dart';
 
 class ExploreRepositoryImpl implements ExploreRepository {
   final ExploreDatasource datasource;
@@ -14,12 +15,7 @@ class ExploreRepositoryImpl implements ExploreRepository {
   @override
   Future<Either<Failures, List<NewsEntity>>> getQueryNews(
       {required String query}) async {
-    try {
-      final result = await datasource.getQueryNews(query: query);
-      return Right(result);
-    } on ServerExceptions catch (e) {
-      return Left(Failures(message: e.exception));
-    }
+    return _getMethod(() async => await datasource.getQueryNews(query: query));
   }
 
   @override
@@ -27,6 +23,23 @@ class ExploreRepositoryImpl implements ExploreRepository {
     try {
       final response = await datasource.getSource();
       return Right(response);
+    } on ServerExceptions catch (e) {
+      return Left(Failures(message: e.exception));
+    }
+  }
+
+  @override
+  Future<Either<Failures, List<NewsEntity>>> getRecentNews(
+      {required String source}) {
+    return _getMethod(
+        () async => await datasource.getRecentNews(source: source));
+  }
+
+  Future<Either<Failures, List<NewsModel>>> _getMethod(
+      Future<List<NewsModel>> Function() fn) async {
+    try {
+      final result = await fn();
+      return Right(result);
     } on ServerExceptions catch (e) {
       return Left(Failures(message: e.exception));
     }

@@ -7,4 +7,6 @@ abstract interface class ExploreRepository {
   Future<Either<Failures, List<NewsEntity>>> getQueryNews(
       {required String query});
   Future<Either<Failures, List<SourceDetailEntity>>> getSources();
+  Future<Either<Failures, List<NewsEntity>>> getRecentNews(
+      {required String source});
 }

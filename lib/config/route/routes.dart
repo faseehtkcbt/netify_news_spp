@@ -3,6 +3,8 @@ import 'package:news_app/core/entity/news_entity.dart';
 import 'package:news_app/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:news_app/features/auth/presentation/pages/sign_up_page.dart';
 import 'package:news_app/features/detailPage/presentation/pages/news_detail_page.dart';
+import 'package:news_app/features/explore/domain/entity/source_detail_entity.dart';
+import 'package:news_app/features/explore/presentation/pages/source_detail_page.dart';
 import 'package:news_app/features/home/presentation/pages/home_page.dart';
 import 'package:news_app/features/home/presentation/pages/latests.dart';
 import 'package:news_app/features/home/presentation/pages/trendings.dart';
@@ -18,6 +20,7 @@ class Routes {
   static const String trending = '/trending';
   static const String latest = '/latest';
   static const String detailPage = '/detail_page';
+  static const String sourceDetailPage = '/source_detail_page';
 
   static final dynamic route = <String, WidgetBuilder>{
     splashScreen: (BuildContext context) => const SplashScreen(),
@@ -29,6 +32,11 @@ class Routes {
     detailPage: (BuildContext context) {
       final result = ModalRoute.of(context)?.settings.arguments as NewsEntity;
       return NewsDetailPage(newsEntity: result);
+    },
+    sourceDetailPage: (BuildContext context) {
+      final result =
+          ModalRoute.of(context)?.settings.arguments as SourceDetailEntity;
+      return SourceDetailPage(source: result);
     }
   };
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/utils/app_text.dart';
 import '../widgets/query_news_widget.dart';
+import '../widgets/source_details_list.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -54,7 +55,7 @@ class _ExplorePageState extends State<ExplorePage>
               child: TabBarView(controller: _tabController, children: [
                 QueryNewsWidget(),
                 QueryNewsWidget(),
-                QueryNewsWidget(),
+                SourceDetailsList(),
               ]),
             )
           ],

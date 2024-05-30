@@ -7,4 +7,7 @@ class QueryNews extends ExploreEvent {
   QueryNews(this.query);
 }
 
-class GetSources extends ExploreEvent {}
+class RecentNews extends ExploreEvent {
+  final String source;
+  RecentNews(this.source);
+}
