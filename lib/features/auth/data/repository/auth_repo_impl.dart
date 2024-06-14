@@ -1,42 +1,42 @@
 import 'package:dartz/dartz.dart';
 import 'package:news_app/core/exception/exceptions.dart';
 import 'package:news_app/core/failure/failures.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' as sb;
 
 import '../../domain/repository/auth_repository.dart';
 import '../datasource/auth_datasource.dart';
+import '../datasource/local_auth_datasource.dart';
 import '../model/user_model.dart';
 
 class AuthRepositoryImplementation implements AuthRepository {
-  AuthDataSource authDataSource;
-  AuthRepositoryImplementation(this.authDataSource);
+  final AuthDataSource authDataSource;
+  final LocalAuthDatasource localData;
+  AuthRepositoryImplementation(this.authDataSource, this.localData);
   @override
   Future<Either<Failures, UserModel>> loginUser(
       {required String email, required String password}) async {
-    return _getUser(() async => await authDataSource.loginUser(
-          email: email,
-          password: password,
-        ));
+    try {
+      final userId = await authDataSource.loginUser(
+        email: email,
+        password: password,
+      );
+      localData.storeLocalData(userId);
+      return right(userId);
+    } on ServerExceptions catch (e) {
+      return Left(Failures(message: e.exception.toString()));
+    }
   }
 
   @override
-  Future<Either<Failures, UserModel>> registerUser(
+  Future<Either<Failures, String>> registerUser(
       {required String name,
       required String email,
       required String password}) async {
-    return _getUser(() async => await authDataSource.registerUser(
-        email: email, password: password, username: name));
-  }
-}
-
-Future<Either<Failures, UserModel>> _getUser(
-    Future<UserModel> Function() fn) async {
-  try {
-    final userId = await fn();
-    return right(userId);
-  } on sb.AuthException catch (e) {
-    return Left(Failures(message: e.message.toString()));
-  } on ServerExceptions catch (e) {
-    return Left(Failures(message: e.exception.toString()));
+    try {
+      final result = await authDataSource.registerUser(
+          email: email, password: password, username: name);
+      return Right(result);
+    } on ServerExceptions catch (e) {
+      return Left(Failures(message: e.exception));
+    }
   }
 }

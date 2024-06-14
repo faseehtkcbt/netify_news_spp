@@ -39,9 +39,10 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, authState) {
-          if (authState is AuthSuccess) {
-            showAppSnackBar(context,
-                "Hello ${authState.userEntity.name}Successfully registered !!! ");
+          if (authState is AuthSuccess<String>) {
+            showAppSnackBar(context, authState.message);
+            Navigator.pushNamedAndRemoveUntil(
+                context, Routes.signInPage, (route) => false);
           }
           if (authState is AuthError) {
             showAppSnackBar(context, authState.error);

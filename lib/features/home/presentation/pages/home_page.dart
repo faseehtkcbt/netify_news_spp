@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/bloc/selection_cubit/selection_cubit.dart';
+import 'package:news_app/features/bookmark/presentation/pages/bookmark_screen.dart';
 import 'package:news_app/features/explore/presentation/pages/explore_page.dart';
 import 'package:news_app/features/home/presentation/pages/homescreen.dart';
 
@@ -15,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   final List _pages = const [
     HomeScreen(),
     ExplorePage(),
-    HomeScreen(),
+    BookMarkScreen(),
     HomeScreen(),
   ];
   @override

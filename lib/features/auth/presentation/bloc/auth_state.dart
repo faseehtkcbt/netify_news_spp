@@ -6,9 +6,9 @@ class AuthInitial extends AuthState {}
 
 class AuthLoading extends AuthState {}
 
-class AuthSuccess extends AuthState {
-  final UserEntity userEntity;
-  AuthSuccess(this.userEntity);
+class AuthSuccess<SuccessType> extends AuthState {
+  final SuccessType message;
+  AuthSuccess(this.message);
 }
 
 class AuthError extends AuthState {

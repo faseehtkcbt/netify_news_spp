@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "464124041603",
+    "project_id": "netify-daaa1",
+    "storage_bucket": "netify-daaa1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:464124041603:android:ea2bc7b546047ce9b8beb6",
+        "android_client_info": {
+          "package_name": "com.example.news_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvAnFeX8_z5odsWyP9DRxjNxuslP64_JM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

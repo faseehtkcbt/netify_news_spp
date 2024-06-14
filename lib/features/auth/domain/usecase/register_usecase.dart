@@ -5,11 +5,11 @@ import 'package:news_app/core/usecase/usecase.dart';
 import '../entity/user_entity.dart';
 import '../repository/auth_repository.dart';
 
-class RegisterUseCase implements Usecase<UserEntity, RegisterParams> {
+class RegisterUseCase implements Usecase<String, RegisterParams> {
   AuthRepository authRepository;
   RegisterUseCase(this.authRepository);
   @override
-  Future<Either<Failures, UserEntity>> call(RegisterParams params) async {
+  Future<Either<Failures, String>> call(RegisterParams params) async {
     return await authRepository.registerUser(
         name: params.name, email: params.email, password: params.password);
   }

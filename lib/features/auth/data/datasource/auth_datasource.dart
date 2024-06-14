@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:news_app/core/exception/exceptions.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:news_app/core/internet/connection_checker.dart';
 import '../model/user_model.dart';
 
 abstract interface class AuthDataSource {
-  Future<UserModel> registerUser(
+  Future<String> registerUser(
       {required String email,
       required String password,
       required String username});
@@ -11,40 +13,71 @@ abstract interface class AuthDataSource {
       {required String email, required String password});
 }
 
-class AuthDatasouceImpl implements AuthDataSource {
-  final SupabaseClient supabaseClient;
-  AuthDatasouceImpl(this.supabaseClient);
+class AuthDatasourceImpl implements AuthDataSource {
+  final ConnectionChecker internet;
+  final FirebaseAuth firebaseAuth;
+  final FirebaseFirestore firestore;
+  AuthDatasourceImpl(this.firebaseAuth, this.firestore, this.internet);
   @override
   Future<UserModel> loginUser(
       {required String email, required String password}) async {
     try {
-      final response = await supabaseClient.auth.signInWithPassword(
+      if (!(await internet.isInternetConnected)) {
+        throw ServerExceptions(
+            'Internet Disconnected!! Please connect the internet.');
+      }
+      final UserModel user;
+      final response = await firebaseAuth.signInWithEmailAndPassword(
         password: password,
         email: email,
       );
-      if (response.user == null) {
+      if (response.user?.uid == null) {
         throw ServerExceptions("Invalid User");
+      } else {
+        final value =
+            await firestore.collection('users').doc(response.user?.uid).get();
+        user = UserModel(
+            photoUrl: value.data()!['photoUrl'],
+            name: value.data()!['username'],
+            id: value.data()!['uid'],
+            email: value.data()!['email']);
       }
-      return UserModel.fromJson(response.user!.toJson());
+      return user;
+    } on FirebaseAuthException catch (e) {
+      throw ServerExceptions(e.code);
+    } on FirebaseException catch (e) {
+      throw ServerExceptions(e.code);
     } catch (e) {
       throw ServerExceptions(e.toString());
     }
   }
 
   @override
-  Future<UserModel> registerUser(
+  Future<String> registerUser(
       {required String email,
       required String password,
       required String username}) async {
     try {
-      final response = await supabaseClient.auth.signUp(
-          password: password,
-          email: email,
-          data: {'name': username, 'image_url': ''});
-      if (response.user == null) {
-        throw ServerExceptions("User is Null");
+      if (!(await internet.isInternetConnected)) {
+        throw ServerExceptions(
+            'Internet Disconnected!! Please connect the internet.');
       }
-      return UserModel.fromJson(response.user!.toJson());
+      String response = "";
+      await firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((user) {
+        firestore.collection('users').doc(user.user?.uid).set({
+          'uid': user.user?.uid,
+          'email': user.user?.email,
+          'username': username,
+          'photoUrl': ""
+        }).then((value) => response = 'Successfully Registered');
+      });
+      return response;
+    } on FirebaseAuthException catch (e) {
+      throw ServerExceptions(e.code);
+    } on FirebaseException catch (e) {
+      throw ServerExceptions(e.code);
     } catch (e) {
       throw ServerExceptions(e.toString());
     }

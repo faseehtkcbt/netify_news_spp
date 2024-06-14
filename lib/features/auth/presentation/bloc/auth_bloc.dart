@@ -27,7 +27,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final response = await _registerUseCase(RegisterParams(
         email: event.email, password: event.password, name: event.name));
     response.fold((failure) => emit(AuthError(failure.message)),
-        (success) => emit(AuthSuccess(success)));
+        (success) => emit(AuthSuccess<String>(success)));
   }
 
   void _onLoginEvent(LoginEvent event, Emitter<AuthState> emit) async {
@@ -36,6 +36,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       password: event.password,
     ));
     response.fold((failure) => emit(AuthError(failure.message)),
-        (success) => emit(AuthSuccess(success)));
+        (success) => emit(AuthSuccess<UserEntity>(success)));
   }
 }

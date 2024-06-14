@@ -8,7 +8,6 @@ void showAppSnackBar(BuildContext context, String content) {
     ..showSnackBar(SnackBar(
         content: AppText(
       text: content,
-      textColor: Colors.black87,
       textStyle: Theme.of(context).textTheme.bodyMedium,
     )));
 }

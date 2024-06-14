@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/color_pallette/app_pallette.dart';
 import 'package:news_app/core/entity/news_entity.dart';
 import 'package:news_app/core/utils/app_text.dart';
@@ -6,6 +7,7 @@ import 'package:news_app/core/utils/get_fav_icon.dart';
 import 'package:news_app/core/utils/launch_in_app.dart';
 import 'package:news_app/core/utils/network_icon.dart';
 import 'package:news_app/core/utils/network_image.dart';
+import 'package:news_app/features/bookmark/presentation/cubit/bookmark_check_cubit.dart';
 
 class NewsDetailPage extends StatefulWidget {
   final NewsEntity newsEntity;
@@ -17,9 +19,22 @@ class NewsDetailPage extends StatefulWidget {
 
 class _NewsDetailPageState extends State<NewsDetailPage> {
   @override
+  void initState() {
+    context.read<BookmarkCheckCubit>().checkBookmark(widget.newsEntity);
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back_outlined)),
+      ),
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -64,9 +79,37 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                             Uri.parse(widget.newsEntity.url ?? ""));
                       },
                       icon: const Icon(Icons.open_in_browser_outlined)),
-                  IconButton(
-                      onPressed: () async {},
-                      icon: const Icon(Icons.bookmark_border_sharp))
+                  BlocConsumer<BookmarkCheckCubit, BookmarkCheckState>(
+                    listener: (context, state) {
+                      // TODO: implement listener
+                    },
+                    builder: (context, state) {
+                      if (state is BookmarkCheckLoaded) {
+                        return state.check
+                            ? IconButton(
+                                onPressed: () async {
+                                  context
+                                      .read<BookmarkCheckCubit>()
+                                      .removeBookmark(widget.newsEntity);
+                                },
+                                icon: const Icon(Icons.bookmark_outlined))
+                            : IconButton(
+                                onPressed: () async {
+                                  context
+                                      .read<BookmarkCheckCubit>()
+                                      .insertBookmark(widget.newsEntity);
+                                },
+                                icon: const Icon(Icons.bookmark_outline));
+                      } else if (state is BookmarkCheckFailure) {
+                        return const Icon(
+                          Icons.warning_rounded,
+                          color: AppPellete.errorColor,
+                        );
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    },
+                  )
                 ],
               ),
               const SizedBox(

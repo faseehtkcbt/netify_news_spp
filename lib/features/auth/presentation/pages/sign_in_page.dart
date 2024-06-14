@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/features/auth/domain/entity/user_entity.dart';
 import 'package:news_app/features/auth/presentation/bloc/auth_bloc.dart';
 
 import '../../../../config/route/routes.dart';
@@ -28,11 +29,11 @@ class _SignInPageState extends State<SignInPage> {
     return Scaffold(
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, authState) {
-          if (authState is AuthSuccess) {
+          if (authState is AuthSuccess<UserEntity>) {
             showAppSnackBar(context,
-                "Hello ${authState.userEntity.name}Successfully registered !!! ");
+                "Hello ${authState.message.name}Successfully registered !!! ");
             Navigator.pushNamedAndRemoveUntil(
-                context, Routes.signUpPage, (route) => false);
+                context, Routes.homeScreen, (route) => false);
           }
           if (authState is AuthError) {
             showAppSnackBar(context, authState.error);
