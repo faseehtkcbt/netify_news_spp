@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/config/route/routes.dart';
 import 'package:news_app/core/color_pallette/app_pallette.dart';
+import 'package:news_app/core/constants/constants.dart';
 import 'package:news_app/core/utils/app_text.dart';
 import 'package:news_app/features/home/presentation/widgets/get_latest_news_widget.dart';
 import 'package:news_app/features/home/presentation/widgets/get_trending_news_widget.dart';
@@ -24,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: AppText(
-          text: 'Netify',
+          text: Constants.appName,
           textStyle: Theme.of(context).textTheme.titleMedium,
           textColor: AppPellete.themeColor,
           textSize: 25,

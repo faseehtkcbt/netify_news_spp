@@ -1,7 +1,7 @@
 class Constants {
   Constants._();
 
-  static const String appName = 'Nifty News';
+  static const String appName = 'Netify';
 
   static const List<String> categories = [
     'All',

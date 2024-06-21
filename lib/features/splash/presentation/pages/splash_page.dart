@@ -25,7 +25,6 @@ class _SplashScreenState extends State<SplashScreen> {
       body: BlocConsumer<CheckloggedinBloc, CheckloggedinState>(
         listener: (context, state) {
           if (state is CheckloggedinLoaded) {
-            print(state.isLogged);
             if (state.isLogged == true) {
               Navigator.pushNamedAndRemoveUntil(
                   context, Routes.homeScreen, (listen) => false);
