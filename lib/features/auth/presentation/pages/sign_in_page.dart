@@ -33,7 +33,7 @@ class _SignInPageState extends State<SignInPage> {
             showAppSnackBar(context,
                 "Hello ${authState.message.name}Successfully registered !!! ");
             Navigator.pushNamedAndRemoveUntil(
-                context, Routes.homeScreen, (route) => false);
+                context, Routes.selectCountryPage, (route) => false);
           }
           if (authState is AuthError) {
             showAppSnackBar(context, authState.error);

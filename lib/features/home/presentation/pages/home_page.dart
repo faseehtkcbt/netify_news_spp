@@ -4,6 +4,7 @@ import 'package:news_app/core/bloc/selection_cubit/selection_cubit.dart';
 import 'package:news_app/features/bookmark/presentation/pages/bookmark_screen.dart';
 import 'package:news_app/features/explore/presentation/pages/explore_page.dart';
 import 'package:news_app/features/home/presentation/pages/homescreen.dart';
+import 'package:news_app/features/profile/presentation/pages/profile_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,7 +18,7 @@ class _HomePageState extends State<HomePage> {
     HomeScreen(),
     ExplorePage(),
     BookMarkScreen(),
-    HomeScreen(),
+    ProfileScreen()
   ];
   @override
   Widget build(BuildContext context) {

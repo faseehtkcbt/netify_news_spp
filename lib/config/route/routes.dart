@@ -8,6 +8,7 @@ import 'package:news_app/features/explore/presentation/pages/source_detail_page.
 import 'package:news_app/features/home/presentation/pages/home_page.dart';
 import 'package:news_app/features/home/presentation/pages/latests.dart';
 import 'package:news_app/features/home/presentation/pages/trendings.dart';
+import 'package:news_app/features/profile/presentation/pages/country_select.dart';
 import 'package:news_app/features/splash/presentation/pages/splash_page.dart';
 
 class Routes {
@@ -21,6 +22,7 @@ class Routes {
   static const String latest = '/latest';
   static const String detailPage = '/detail_page';
   static const String sourceDetailPage = '/source_detail_page';
+  static const String selectCountryPage = '/select_country_page';
 
   static final dynamic route = <String, WidgetBuilder>{
     splashScreen: (BuildContext context) => const SplashScreen(),
@@ -37,6 +39,7 @@ class Routes {
       final result =
           ModalRoute.of(context)?.settings.arguments as SourceDetailEntity;
       return SourceDetailPage(source: result);
-    }
+    },
+    selectCountryPage: (BuildContext context) => const CountrySelect()
   };
 }
