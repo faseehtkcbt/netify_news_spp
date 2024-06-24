@@ -10,7 +10,7 @@ import '../../../home/data/model/news_model.dart';
 
 abstract interface class ExploreDatasource {
   Future<List<NewsModel>> getQueryNews({required String query});
-  Future<List<SourceDetailModel>> getSource();
+  Future<List<SourceDetailModel>> getSource({required String country});
   Future<List<NewsModel>> getRecentNews({required String source});
 }
 
@@ -41,14 +41,14 @@ class ExploreDataSourceImpl implements ExploreDatasource {
   }
 
   @override
-  Future<List<SourceDetailModel>> getSource() async {
+  Future<List<SourceDetailModel>> getSource({required String country}) async {
     try {
       if (!(await connectionChecker.isInternetConnected)) {
         throw ServerExceptions(
             'Internet Disconnected!! Please connect the internet.');
       }
       final response = await http.get(Uri.parse(
-          '${Constants.sources}?country=in&apiKey=${Credentials.apiKey}'));
+          '${Constants.sources}?country=$country&apiKey=${Credentials.apiKey}'));
       if (response.statusCode == 200) {
         final List<SourceDetailModel> sources = [];
         List result = jsonDecode(response.body)['sources'];

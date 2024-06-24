@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/core/utils/snackbar.dart';
 import 'package:news_app/core/utils/source_list_tile.dart';
 import 'package:news_app/features/explore/presentation/bloc/source_bloc.dart';
 
@@ -26,17 +27,23 @@ class _SourceDetailsListState extends State<SourceDetailsList> {
       listener: (context, state) {},
       builder: (context, state) {
         if (state is SourceFailure) {
+          showAppSnackBar(context, state.failures.message);
           return Center(
               child: AppText(
-                  text: 'ERROR',
+                  text: 'Something went wrong',
                   textStyle: Theme.of(context).textTheme.bodyMedium));
         } else if (state is SourceLoaded) {
-          return ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: state.data.length,
-              itemBuilder: (context, index) =>
-                  SourceListTile(data: state.data[index]));
+          return state.data.isNotEmpty
+              ? ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: state.data.length,
+                  itemBuilder: (context, index) =>
+                      SourceListTile(data: state.data[index]))
+              : Center(
+                  child: AppText(
+                      text: 'No Sources In Selected Country',
+                      textStyle: Theme.of(context).textTheme.bodyMedium));
         } else {
           return const Center(
             child: Loader(),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/core/utils/snackbar.dart';
 
 import '../../../../core/utils/app_text.dart';
 import '../../../../core/utils/loader.dart';
@@ -31,9 +32,10 @@ class GetBookmark extends StatelessWidget {
                       text: 'No bookmarked subjects',
                       textStyle: Theme.of(context).textTheme.bodyMedium));
         } else if (state is BookmarkError) {
+          showAppSnackBar(context, state.failures.message);
           return Center(
               child: AppText(
-                  text: 'ERROR',
+                  text: 'Something went wrong',
                   textStyle: Theme.of(context).textTheme.bodyMedium));
         } else {
           return const Center(

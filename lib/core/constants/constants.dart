@@ -76,6 +76,7 @@ class Constants {
   static const String topHeadLines = '$baseUrl/top-headlines';
   static const String sources = '$topHeadLines/sources';
   static const String countryUrl = 'https://restcountries.com/v3.1/alpha';
+  static const String defaultCountry = 'in';
 
   ///----------------------------------------------------------- ///
   /// --------------------- image declaration ------------------ ///

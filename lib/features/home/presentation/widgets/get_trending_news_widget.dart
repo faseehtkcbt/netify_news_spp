@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/core/utils/snackbar.dart';
 import 'package:news_app/features/home/presentation/bloc/trending/trending_bloc.dart';
 
 import '../../../../core/utils/app_text.dart';
@@ -26,12 +27,18 @@ class _GetTrendingNewsWidgetState extends State<GetTrendingNewsWidget> {
     return BlocConsumer<TrendingBloc, TrendingState>(
       builder: (BuildContext context, newsState) {
         if (newsState is TrendingFailure) {
+          showAppSnackBar(context, newsState.failure.message);
           return Center(
               child: AppText(
-                  text: 'ERROR',
+                  text: 'Something went wrong',
                   textStyle: Theme.of(context).textTheme.bodyMedium));
         } else if (newsState is TrendingLoaded) {
-          return NewsCard(newsState.news[0]);
+          return newsState.news.isNotEmpty
+              ? NewsCard(newsState.news[0])
+              : Center(
+                  child: AppText(
+                      text: 'Something went wrong',
+                      textStyle: Theme.of(context).textTheme.bodyMedium));
         } else {
           return const Center(
             child: Loader(),

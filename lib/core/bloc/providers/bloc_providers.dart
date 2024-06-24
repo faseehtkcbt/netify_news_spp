@@ -7,6 +7,7 @@ import 'package:news_app/features/explore/presentation/bloc/source_bloc.dart';
 import 'package:news_app/features/home/presentation/bloc/latest/news_bloc.dart';
 import 'package:news_app/features/home/presentation/bloc/trending/trending_bloc.dart';
 import 'package:news_app/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:news_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:news_app/features/profile/presentation/cubit/search_country_cubit.dart';
 import 'package:news_app/features/splash/presentation/bloc/checkloggedin_bloc.dart';
 import 'package:news_app/init_dependancy.dart';
@@ -27,6 +28,8 @@ class BlocProviders {
         create: (_) => serviceLocator<CheckloggedinBloc>()),
     BlocProvider<ProfileBloc>(create: (_) => serviceLocator<ProfileBloc>()),
     BlocProvider<SearchCountryCubit>(
-        create: (_) => serviceLocator<SearchCountryCubit>())
+        create: (_) => serviceLocator<SearchCountryCubit>()),
+    BlocProvider<ProfileLocalCubit>(
+        create: (_) => serviceLocator<ProfileLocalCubit>())
   ];
 }

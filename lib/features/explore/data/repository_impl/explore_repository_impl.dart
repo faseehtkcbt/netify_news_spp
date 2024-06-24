@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:news_app/core/constants/constants.dart';
 import 'package:news_app/core/entity/news_entity.dart';
 import 'package:news_app/core/exception/exceptions.dart';
 import 'package:news_app/core/failure/failures.dart';
@@ -7,10 +8,12 @@ import 'package:news_app/features/explore/data/model/source_detail_model.dart';
 import 'package:news_app/features/explore/domain/repository/explore_repository.dart';
 import 'package:news_app/features/home/data/model/news_model.dart';
 
+import '../datasource/local_explore_datasource.dart';
+
 class ExploreRepositoryImpl implements ExploreRepository {
   final ExploreDatasource datasource;
-
-  ExploreRepositoryImpl(this.datasource);
+  final LocalExploreDatasource local;
+  ExploreRepositoryImpl(this.datasource, this.local);
 
   @override
   Future<Either<Failures, List<NewsEntity>>> getQueryNews(
@@ -21,7 +24,9 @@ class ExploreRepositoryImpl implements ExploreRepository {
   @override
   Future<Either<Failures, List<SourceDetailModel>>> getSources() async {
     try {
-      final response = await datasource.getSource();
+      String? country = local.getCountry();
+      final response = await datasource.getSource(
+          country: country ?? Constants.defaultCountry);
       return Right(response);
     } on ServerExceptions catch (e) {
       return Left(Failures(message: e.exception));

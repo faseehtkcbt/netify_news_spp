@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/utils/loader.dart';
 import 'package:news_app/core/utils/news_list_tile.dart';
+import 'package:news_app/core/utils/snackbar.dart';
 import 'package:news_app/features/explore/presentation/bloc/explore_bloc.dart';
 
 import '../../../../core/utils/app_text.dart';
@@ -27,9 +28,10 @@ class _RecentNewsWidgetState extends State<RecentNewsWidget> {
       listener: (context, state) {},
       builder: (context, state) {
         if (state is ExploreFailure) {
+          showAppSnackBar(context, state.failures.message);
           return Center(
               child: AppText(
-                  text: 'ERROR',
+                  text: 'Something went wrong',
                   textStyle: Theme.of(context).textTheme.bodyMedium));
         } else if (state is ExploreLoaded) {
           return state.data.isNotEmpty

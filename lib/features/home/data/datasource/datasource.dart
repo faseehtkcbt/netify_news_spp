@@ -9,7 +9,8 @@ import '../model/news_model.dart';
 
 abstract interface class HomeDataSource {
   Future<List<NewsModel>> getTrendings();
-  Future<List<NewsModel>> getLatest({required String category});
+  Future<List<NewsModel>> getLatest(
+      {required String category, required String country});
 }
 
 class HomeDataSourceImpl implements HomeDataSource {
@@ -17,14 +18,15 @@ class HomeDataSourceImpl implements HomeDataSource {
 
   HomeDataSourceImpl(this.connectionChecker);
   @override
-  Future<List<NewsModel>> getLatest({required String category}) async {
+  Future<List<NewsModel>> getLatest(
+      {required String category, required String country}) async {
     try {
       if (!await (connectionChecker.isInternetConnected)) {
         throw ServerExceptions(
             'Internet Disconnected!! Please connect the internet.');
       }
       final response = await http.get(Uri.parse(
-          "${Constants.topHeadLines}?country=in&category=$category&apiKey=${Credentials.apiKey}"));
+          "${Constants.topHeadLines}?country=$country&category=$category&apiKey=${Credentials.apiKey}"));
       if (response.statusCode == 200) {
         List<NewsModel> data = [];
         List result = jsonDecode(response.body)['articles'];

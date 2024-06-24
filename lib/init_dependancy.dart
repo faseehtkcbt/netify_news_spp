@@ -21,6 +21,7 @@ import 'package:news_app/features/bookmark/domain/usecase/remove_bookmark_usecas
 import 'package:news_app/features/bookmark/presentation/bloc/bookmark_bloc.dart';
 import 'package:news_app/features/bookmark/presentation/cubit/bookmark_check_cubit.dart';
 import 'package:news_app/features/explore/data/datasource/explore_datasource.dart';
+import 'package:news_app/features/explore/data/datasource/local_explore_datasource.dart';
 import 'package:news_app/features/explore/data/repository_impl/explore_repository_impl.dart';
 import 'package:news_app/features/explore/domain/repository/explore_repository.dart';
 import 'package:news_app/features/explore/domain/usecase/get_query_news.dart';
@@ -29,17 +30,23 @@ import 'package:news_app/features/explore/domain/usecase/get_sources.dart';
 import 'package:news_app/features/explore/presentation/bloc/explore_bloc.dart';
 import 'package:news_app/features/explore/presentation/bloc/source_bloc.dart';
 import 'package:news_app/features/home/data/datasource/datasource.dart';
+import 'package:news_app/features/home/data/datasource/local_home_datasource.dart';
 import 'package:news_app/features/home/data/repo_impl/news_repo_impl.dart';
 import 'package:news_app/features/home/domain/repository/news_repository.dart';
 import 'package:news_app/features/home/domain/usecase/get_trending_news.dart';
 import 'package:news_app/features/home/domain/usecase/get_latest.dart';
 import 'package:news_app/features/home/presentation/bloc/latest/news_bloc.dart';
 import 'package:news_app/features/home/presentation/bloc/trending/trending_bloc.dart';
+import 'package:news_app/features/profile/data/datasource/local_profile_datasource.dart';
 import 'package:news_app/features/profile/data/datasource/profile_datasource.dart';
 import 'package:news_app/features/profile/data/repo_impl/profile_repo_impl.dart';
 import 'package:news_app/features/profile/domain/repository/profile_repository.dart';
 import 'package:news_app/features/profile/domain/usecase/get_country_list_usecase.dart';
+import 'package:news_app/features/profile/domain/usecase/get_country_usecase.dart';
+import 'package:news_app/features/profile/domain/usecase/get_profile_data.dart';
+import 'package:news_app/features/profile/domain/usecase/store_country_usecase.dart';
 import 'package:news_app/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:news_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:news_app/features/splash/data/repo_impl/splash_repository_impl.dart';
 import 'package:news_app/features/splash/domain/repository/splash_repository.dart';
 import 'package:news_app/features/splash/domain/usecase/is_logged_in_usecase.dart';
@@ -105,8 +112,11 @@ void _initNews() {
         () => ConnectionCheckerImpl(serviceLocator<InternetConnection>()))
     ..registerFactory<HomeDataSource>(
         () => HomeDataSourceImpl(serviceLocator<ConnectionChecker>()))
-    ..registerFactory<NewsRepository>(
-        () => NewsRepositoryImpl(serviceLocator<HomeDataSource>()))
+    ..registerFactory<LocalHomeDatasource>(
+        () => LocalHomeDatasourceImpl(serviceLocator<SharedPreferences>()))
+    ..registerFactory<NewsRepository>(() => NewsRepositoryImpl(
+        serviceLocator<HomeDataSource>(),
+        serviceLocator<LocalHomeDatasource>()))
     ..registerFactory<GetTrendingNews>(
         () => GetTrendingNews(serviceLocator<NewsRepository>()))
     ..registerFactory<GetLatestNews>(
@@ -117,8 +127,11 @@ void _initNews() {
         () => TrendingBloc(serviceLocator<GetTrendingNews>()))
     ..registerFactory<ExploreDatasource>(
         () => ExploreDataSourceImpl(serviceLocator<ConnectionChecker>()))
-    ..registerFactory<ExploreRepository>(
-        () => ExploreRepositoryImpl(serviceLocator<ExploreDatasource>()))
+    ..registerFactory<LocalExploreDatasource>(
+        () => LocalExploreDatasourceImpl(serviceLocator<SharedPreferences>()))
+    ..registerFactory<ExploreRepository>(() => ExploreRepositoryImpl(
+        serviceLocator<ExploreDatasource>(),
+        serviceLocator<LocalExploreDatasource>()))
     ..registerFactory<GetQueryNews>(
         () => GetQueryNews(serviceLocator<ExploreRepository>()))
     ..registerFactory<GetSourcesDetails>(
@@ -150,12 +163,25 @@ void _initNews() {
         serviceLocator<RemoveBookmarkUsecase>()))
     ..registerFactory<ProfileDatasource>(
         () => ProfileDatasourceImpl(serviceLocator<ConnectionChecker>()))
-    ..registerFactory<ProfileRepository>(
-        () => ProfileRepositoryImpl(serviceLocator<ProfileDatasource>()))
+    ..registerFactory<LocalProfileDatasource>(() =>
+        LocalProfileDataSourceImpl(pref: serviceLocator<SharedPreferences>()))
+    ..registerFactory<ProfileRepository>(() => ProfileRepositoryImpl(
+        serviceLocator<ProfileDatasource>(),
+        serviceLocator<LocalProfileDatasource>()))
     ..registerFactory<GetCountryListUsecase>(
         () => GetCountryListUsecase(serviceLocator<ProfileRepository>()))
-    ..registerLazySingleton<ProfileBloc>(
-        () => ProfileBloc(getCountry: serviceLocator<GetCountryListUsecase>()))
+    ..registerFactory<StoreCountryUsecase>(
+        () => StoreCountryUsecase(serviceLocator<ProfileRepository>()))
+    ..registerFactory<GetCountryUsecase>(
+        () => GetCountryUsecase(serviceLocator<ProfileRepository>()))
+    ..registerFactory<GetProfileDataUsecase>(
+        () => GetProfileDataUsecase(serviceLocator<ProfileRepository>()))
+    ..registerLazySingleton<ProfileBloc>(() => ProfileBloc(
+        getCountryList: serviceLocator<GetCountryListUsecase>(),
+        getData: serviceLocator<GetProfileDataUsecase>()))
+    ..registerLazySingleton<ProfileLocalCubit>(() => ProfileLocalCubit(
+        store: serviceLocator<StoreCountryUsecase>(),
+        getCountry: serviceLocator<GetCountryUsecase>()))
     ..registerLazySingleton<SearchCountryCubit>(() => SearchCountryCubit());
 }
 

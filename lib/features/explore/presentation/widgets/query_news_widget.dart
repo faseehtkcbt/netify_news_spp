@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/utils/app_text_form_field.dart';
+import 'package:news_app/core/utils/snackbar.dart';
 import 'package:news_app/features/explore/presentation/bloc/explore_bloc.dart';
 
 import '../../../../core/utils/app_text.dart';
@@ -44,9 +45,10 @@ class _QueryNewsWidgetState extends State<QueryNewsWidget> {
             BlocConsumer<ExploreBloc, ExploreState>(
               builder: (BuildContext context, newsState) {
                 if (newsState is ExploreFailure) {
+                  showAppSnackBar(context, newsState.failures.message);
                   return Center(
                       child: AppText(
-                          text: 'ERROR',
+                          text: 'Something went wrong',
                           textStyle: Theme.of(context).textTheme.bodyMedium));
                 } else if (newsState is ExploreLoaded) {
                   return newsState.data.isNotEmpty

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/core/utils/snackbar.dart';
 
 import '../../../../core/utils/app_text.dart';
 import '../../../../core/utils/loader.dart';
@@ -26,9 +27,10 @@ class _GetLatestNewsWidgetState extends State<GetLatestNewsWidget> {
     return BlocConsumer<NewsBloc, NewsState>(
       builder: (BuildContext context, newsState) {
         if (newsState is NewsFailure) {
+          showAppSnackBar(context, newsState.failure.message);
           return Center(
               child: AppText(
-                  text: 'ERROR',
+                  text: 'Something went wrong',
                   textStyle: Theme.of(context).textTheme.bodyMedium));
         } else if (newsState is NewsLoaded) {
           return newsState.news.isNotEmpty
