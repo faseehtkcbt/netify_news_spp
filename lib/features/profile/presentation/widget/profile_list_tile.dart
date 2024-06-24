@@ -23,7 +23,6 @@ class ProfileListTile extends StatelessWidget {
           icon,
           size: 23,
         ),
-        iconColor: AppPellete.textBlackColor,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
             side: const BorderSide(color: AppPellete.themeColor)),
