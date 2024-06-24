@@ -12,6 +12,7 @@ class NetworkIcon extends StatelessWidget {
       width: radius,
       decoration: BoxDecoration(
           shape: BoxShape.circle,
+          color: Colors.white,
           image: DecorationImage(image: NetworkImage(url), fit: BoxFit.cover)),
     );
   }
