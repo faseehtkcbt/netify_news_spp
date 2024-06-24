@@ -64,6 +64,7 @@ class AppTheme {
       contentPadding: const EdgeInsets.all(15),
       enabledBorder: _border(),
       errorBorder: _border(color: AppPellete.errorColor),
+      focusedErrorBorder: _border(color: AppPellete.errorColor),
       focusedBorder: _border(
         color: AppPellete.themeColor,
       ));
@@ -113,6 +114,7 @@ class AppTheme {
       contentPadding: const EdgeInsets.all(15),
       enabledBorder: _border(color: AppPellete.darkFillColor),
       errorBorder: _border(color: AppPellete.errorColor),
+      focusedErrorBorder: _border(color: AppPellete.errorColor),
       focusedBorder: _border(color: AppPellete.themeColor));
 
   static BottomNavigationBarThemeData darkBottomBarTheme =

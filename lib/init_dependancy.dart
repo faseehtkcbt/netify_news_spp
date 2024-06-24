@@ -35,6 +35,11 @@ import 'package:news_app/features/home/domain/usecase/get_trending_news.dart';
 import 'package:news_app/features/home/domain/usecase/get_latest.dart';
 import 'package:news_app/features/home/presentation/bloc/latest/news_bloc.dart';
 import 'package:news_app/features/home/presentation/bloc/trending/trending_bloc.dart';
+import 'package:news_app/features/profile/data/datasource/profile_datasource.dart';
+import 'package:news_app/features/profile/data/repo_impl/profile_repo_impl.dart';
+import 'package:news_app/features/profile/domain/repository/profile_repository.dart';
+import 'package:news_app/features/profile/domain/usecase/get_country_list_usecase.dart';
+import 'package:news_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:news_app/features/splash/data/repo_impl/splash_repository_impl.dart';
 import 'package:news_app/features/splash/domain/repository/splash_repository.dart';
 import 'package:news_app/features/splash/domain/usecase/is_logged_in_usecase.dart';
@@ -44,6 +49,7 @@ import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'features/profile/presentation/cubit/search_country_cubit.dart';
 import 'features/splash/data/datasource/local_splash_datasource.dart';
 
 final serviceLocator = GetIt.instance;
@@ -141,7 +147,16 @@ void _initNews() {
     ..registerLazySingleton<BookmarkCheckCubit>(() => BookmarkCheckCubit(
         serviceLocator<CheckBookmarkUsecase>(),
         serviceLocator<InsertBookmarkUsecase>(),
-        serviceLocator<RemoveBookmarkUsecase>()));
+        serviceLocator<RemoveBookmarkUsecase>()))
+    ..registerFactory<ProfileDatasource>(
+        () => ProfileDatasourceImpl(serviceLocator<ConnectionChecker>()))
+    ..registerFactory<ProfileRepository>(
+        () => ProfileRepositoryImpl(serviceLocator<ProfileDatasource>()))
+    ..registerFactory<GetCountryListUsecase>(
+        () => GetCountryListUsecase(serviceLocator<ProfileRepository>()))
+    ..registerLazySingleton<ProfileBloc>(
+        () => ProfileBloc(getCountry: serviceLocator<GetCountryListUsecase>()))
+    ..registerLazySingleton<SearchCountryCubit>(() => SearchCountryCubit());
 }
 
 Future<Database> _initDatabase() async {

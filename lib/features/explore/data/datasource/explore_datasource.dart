@@ -33,7 +33,7 @@ class ExploreDataSourceImpl implements ExploreDatasource {
         data.map((e) => news.add(NewsModel.fromJson(e))).toList();
         return news;
       } else {
-        throw ServerExceptions(response.statusCode.toString());
+        throw ServerExceptions(response.reasonPhrase ?? "");
       }
     } catch (e) {
       throw ServerExceptions(e.toString());
@@ -55,7 +55,7 @@ class ExploreDataSourceImpl implements ExploreDatasource {
         result.map((e) => sources.add(SourceDetailModel.fromJson(e))).toList();
         return sources;
       } else {
-        throw ServerExceptions(response.statusCode.toString());
+        throw ServerExceptions(response.reasonPhrase ?? "");
       }
     } catch (e) {
       throw ServerExceptions(e.toString());
@@ -77,7 +77,7 @@ class ExploreDataSourceImpl implements ExploreDatasource {
         result.map((e) => news.add(NewsModel.fromJson(e))).toList();
         return news;
       } else {
-        throw ServerExceptions(response.statusCode.toString());
+        throw ServerExceptions(response.reasonPhrase ?? "");
       }
     } catch (e) {
       throw ServerExceptions(e.toString());

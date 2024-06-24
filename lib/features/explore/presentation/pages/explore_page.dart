@@ -18,7 +18,7 @@ class _ExplorePageState extends State<ExplorePage>
   void initState() {
     // TODO: implement initState
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -43,7 +43,6 @@ class _ExplorePageState extends State<ExplorePage>
                 dividerColor: Theme.of(context).scaffoldBackgroundColor,
                 tabs: const [
                   Text('News'),
-                  Text('Topics'),
                   Text('Sources'),
                 ],
               ),
@@ -53,7 +52,6 @@ class _ExplorePageState extends State<ExplorePage>
             ),
             Expanded(
               child: TabBarView(controller: _tabController, children: const [
-                QueryNewsWidget(),
                 QueryNewsWidget(),
                 SourceDetailsList(),
               ]),
