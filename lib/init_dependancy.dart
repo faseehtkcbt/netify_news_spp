@@ -49,6 +49,7 @@ import 'package:news_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:news_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:news_app/features/splash/data/repo_impl/splash_repository_impl.dart';
 import 'package:news_app/features/splash/domain/repository/splash_repository.dart';
+import 'package:news_app/features/splash/domain/usecase/delete_data_usecase.dart';
 import 'package:news_app/features/splash/domain/usecase/is_logged_in_usecase.dart';
 import 'package:news_app/features/splash/presentation/bloc/checkloggedin_bloc.dart';
 import 'package:news_app/firebase_options.dart';
@@ -95,14 +96,17 @@ void _initAuth() {
     ..registerLazySingleton<AuthBloc>(() => AuthBloc(
         registerUseCase: serviceLocator<RegisterUseCase>(),
         loginUseCase: serviceLocator<LoginUseCase>()))
-    ..registerFactory<LocalSplashDatasource>(
-        () => LocalSplashDatasourceImpl(serviceLocator<SharedPreferences>()))
+    ..registerFactory<LocalSplashDatasource>(() => LocalSplashDatasourceImpl(
+        serviceLocator<SharedPreferences>(), serviceLocator<Database>()))
     ..registerFactory<SplashRepository>(
         () => SplashRepositoryImpl(serviceLocator<LocalSplashDatasource>()))
     ..registerFactory<IsLoggedInUsecase>(
         () => IsLoggedInUsecase(serviceLocator<SplashRepository>()))
-    ..registerLazySingleton<CheckloggedinBloc>(
-        () => CheckloggedinBloc(serviceLocator<IsLoggedInUsecase>()));
+    ..registerFactory<DeleteDataUsecase>(
+        () => DeleteDataUsecase(serviceLocator<SplashRepository>()))
+    ..registerLazySingleton<CheckloggedinBloc>(() => CheckloggedinBloc(
+        serviceLocator<IsLoggedInUsecase>(),
+        serviceLocator<DeleteDataUsecase>()));
 }
 
 void _initNews() {

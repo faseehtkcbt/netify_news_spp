@@ -4,3 +4,5 @@ part of 'checkloggedin_bloc.dart';
 abstract class CheckloggedinEvent {}
 
 class IsLoggedIn extends CheckloggedinEvent {}
+
+class LoggedOut extends CheckloggedinEvent {}

@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/color_pallette/app_pallette.dart';
 import 'package:news_app/core/utils/app_text.dart';
 import 'package:news_app/core/utils/network_image.dart';
+import 'package:news_app/core/utils/show_app_dialog.dart';
 import 'package:news_app/features/auth/domain/entity/user_entity.dart';
 import 'package:news_app/features/profile/presentation/bloc/profile_bloc.dart';
 
 import '../../../../config/route/routes.dart';
 import '../../../../core/utils/loader.dart';
+import '../../../splash/presentation/bloc/checkloggedin_bloc.dart';
 import '../widget/profile_list_tile.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -109,24 +111,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       ProfileListTile(
                         onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) => Dialog(
-                                    child: Container(
-                                      height: 300,
-                                      width: 10,
-                                      child: Column(
-                                        children: [
-                                          // Image.asset(Constants.alertGif),
-                                          AppText(
-                                              text: 'Are you sure to Logout ??',
-                                              textStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium),
-                                        ],
-                                      ),
-                                    ),
-                                  ));
+                          showAppDialog(
+                              context, 'Logout', 'Are you sure to logout??',
+                              () {
+                            context.read<CheckloggedinBloc>().add(LoggedOut());
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, Routes.signInPage, (listen) => false);
+                          }, () {
+                            Navigator.pop(context);
+                          });
                         },
                         listTitle: 'Log out',
                         icon: Icons.logout_outlined,
