@@ -67,8 +67,8 @@ class AuthDatasourceImpl implements AuthDataSource {
       String response = "";
       await firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password)
-          .then((user) {
-        firestore.collection('users').doc(user.user?.uid).set({
+          .then((user) async {
+        await firestore.collection('users').doc(user.user?.uid).set({
           'uid': user.user?.uid,
           'email': user.user?.email,
           'username': username,
