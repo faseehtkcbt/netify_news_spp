@@ -31,7 +31,7 @@ class _SignInPageState extends State<SignInPage> {
         listener: (context, authState) {
           if (authState is AuthSuccess<UserEntity>) {
             showAppSnackBar(context,
-                "Hello ${authState.message.name}Successfully registered !!! ");
+                "Hello ${authState.message.name} .Successfully registered !!! ");
             Navigator.pushNamedAndRemoveUntil(
                 context, Routes.selectCountryPage, (route) => false);
           }

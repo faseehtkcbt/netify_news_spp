@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/entity/news_entity.dart';
+import 'package:news_app/features/auth/domain/entity/user_entity.dart';
 import 'package:news_app/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:news_app/features/auth/presentation/pages/sign_up_page.dart';
 import 'package:news_app/features/detailPage/presentation/pages/news_detail_page.dart';
@@ -46,6 +47,6 @@ class Routes {
       return SourceDetailPage(source: result);
     },
     selectCountryPage: (BuildContext context) => const CountrySelect(),
-    profilePage: (BuildContext context) => const ProfileScreen()
+    profilePage: (BuildContext context) => const ProfileScreen(),
   };
 }

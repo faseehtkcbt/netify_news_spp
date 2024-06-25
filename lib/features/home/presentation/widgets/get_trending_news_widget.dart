@@ -27,7 +27,6 @@ class _GetTrendingNewsWidgetState extends State<GetTrendingNewsWidget> {
     return BlocConsumer<TrendingBloc, TrendingState>(
       builder: (BuildContext context, newsState) {
         if (newsState is TrendingFailure) {
-          showAppSnackBar(context, newsState.failure.message);
           return Center(
               child: AppText(
                   text: 'Something went wrong',
@@ -45,7 +44,11 @@ class _GetTrendingNewsWidgetState extends State<GetTrendingNewsWidget> {
           );
         }
       },
-      listener: (BuildContext context, Object? state) {},
+      listener: (BuildContext context, Object? state) {
+        if (state is TrendingFailure) {
+          showAppSnackBar(context, state.failure.message);
+        }
+      },
     );
   }
 }

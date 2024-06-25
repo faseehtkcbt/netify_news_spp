@@ -25,34 +25,35 @@ class _GetLatestNewsWidgetState extends State<GetLatestNewsWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<NewsBloc, NewsState>(
-      builder: (BuildContext context, newsState) {
-        if (newsState is NewsFailure) {
-          showAppSnackBar(context, newsState.failure.message);
-          return Center(
-              child: AppText(
-                  text: 'Something went wrong',
-                  textStyle: Theme.of(context).textTheme.bodyMedium));
-        } else if (newsState is NewsLoaded) {
-          return newsState.news.isNotEmpty
-              ? ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return NewsListTile(newsEntity: newsState.news[index]);
-                  },
-                  shrinkWrap: true,
-                  itemCount: newsState.news.length,
-                )
-              : Center(
-                  child: AppText(
-                      text: 'No updates on this subject',
-                      textStyle: Theme.of(context).textTheme.bodyMedium));
-        } else {
-          return const Center(
-            child: Loader(),
-          );
-        }
-      },
-      listener: (BuildContext context, Object? state) {},
-    );
+        builder: (BuildContext context, newsState) {
+      if (newsState is NewsFailure) {
+        return Center(
+            child: AppText(
+                text: 'Something went wrong',
+                textStyle: Theme.of(context).textTheme.bodyMedium));
+      } else if (newsState is NewsLoaded) {
+        return newsState.news.isNotEmpty
+            ? ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return NewsListTile(newsEntity: newsState.news[index]);
+                },
+                shrinkWrap: true,
+                itemCount: newsState.news.length,
+              )
+            : Center(
+                child: AppText(
+                    text: 'No updates on this subject',
+                    textStyle: Theme.of(context).textTheme.bodyMedium));
+      } else {
+        return const Center(
+          child: Loader(),
+        );
+      }
+    }, listener: (BuildContext context, Object? state) {
+      if (state is NewsFailure) {
+        showAppSnackBar(context, state.failure.message);
+      }
+    });
   }
 }

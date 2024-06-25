@@ -56,9 +56,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Center(
                           child: profileState.data.photoUrl != ""
                               ? NetworkImageUrl(
+                                  radius: 50,
                                   url: profileState.data.photoUrl,
-                                  height: 50,
-                                  width: 50)
+                                  height: 100,
+                                  width: 100)
                               : CircleAvatar(
                                   radius: 50,
                                   backgroundColor: AppPellete.themeColor,
@@ -95,14 +96,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Navigator.pushNamed(
                               context, Routes.selectCountryPage);
                         },
-                        listTitle: 'Edit Profile',
-                        icon: Icons.person_outline,
-                      ),
-                      ProfileListTile(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, Routes.selectCountryPage);
-                        },
                         listTitle: 'Change selected country',
                         icon: Icons.south_america_rounded,
                       ),
@@ -115,7 +108,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         icon: Icons.sticky_note_2_outlined,
                       ),
                       ProfileListTile(
-                        onTap: () {},
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) => Dialog(
+                                    child: Container(
+                                      height: 300,
+                                      width: 10,
+                                      child: Column(
+                                        children: [
+                                          // Image.asset(Constants.alertGif),
+                                          AppText(
+                                              text: 'Are you sure to Logout ??',
+                                              textStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium),
+                                        ],
+                                      ),
+                                    ),
+                                  ));
+                        },
                         listTitle: 'Log out',
                         icon: Icons.logout_outlined,
                       ),

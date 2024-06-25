@@ -28,7 +28,6 @@ class _RecentNewsWidgetState extends State<RecentNewsWidget> {
       listener: (context, state) {},
       builder: (context, state) {
         if (state is ExploreFailure) {
-          showAppSnackBar(context, state.failures.message);
           return Center(
               child: AppText(
                   text: 'Something went wrong',

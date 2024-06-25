@@ -47,6 +47,8 @@ class AuthDatasourceImpl implements AuthDataSource {
       throw ServerExceptions(e.code);
     } on FirebaseException catch (e) {
       throw ServerExceptions(e.code);
+    } on ServerExceptions catch (e) {
+      throw ServerExceptions(e.exception);
     } catch (e) {
       throw ServerExceptions(e.toString());
     }
@@ -78,6 +80,8 @@ class AuthDatasourceImpl implements AuthDataSource {
       throw ServerExceptions(e.code);
     } on FirebaseException catch (e) {
       throw ServerExceptions(e.code);
+    } on ServerExceptions catch (e) {
+      throw ServerExceptions(e.exception);
     } catch (e) {
       throw ServerExceptions(e.toString());
     }

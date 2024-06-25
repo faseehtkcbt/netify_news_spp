@@ -33,8 +33,10 @@ class HomeDataSourceImpl implements HomeDataSource {
         result.map((item) => data.add(NewsModel.fromJson(item))).toList();
         return data;
       } else {
-        throw ServerExceptions(response.reasonPhrase ?? "");
+        throw ServerExceptions(jsonDecode(response.body)['message']);
       }
+    } on ServerExceptions catch (e) {
+      throw ServerExceptions(e.exception);
     } catch (e) {
       throw ServerExceptions(e.toString());
     }
@@ -57,8 +59,10 @@ class HomeDataSourceImpl implements HomeDataSource {
         result.map((item) => data.add(NewsModel.fromJson(item))).toList();
         return data;
       } else {
-        throw ServerExceptions(response.reasonPhrase ?? "");
+        throw ServerExceptions(jsonDecode(response.body)['message']);
       }
+    } on ServerExceptions catch (e) {
+      throw ServerExceptions(e.exception);
     } catch (e) {
       throw ServerExceptions(e.toString());
     }

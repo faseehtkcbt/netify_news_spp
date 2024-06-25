@@ -34,8 +34,10 @@ class ProfileDatasourceImpl implements ProfileDatasource {
             .toList();
         return countryList;
       } else {
-        throw ServerExceptions(response.reasonPhrase ?? '');
+        throw ServerExceptions(jsonDecode(response.body)['message']);
       }
+    } on ServerExceptions catch (e) {
+      throw ServerExceptions(e.exception);
     } catch (e) {
       throw ServerExceptions(e.toString());
     }

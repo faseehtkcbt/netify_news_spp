@@ -45,7 +45,6 @@ class _QueryNewsWidgetState extends State<QueryNewsWidget> {
             BlocConsumer<ExploreBloc, ExploreState>(
               builder: (BuildContext context, newsState) {
                 if (newsState is ExploreFailure) {
-                  showAppSnackBar(context, newsState.failures.message);
                   return Center(
                       child: AppText(
                           text: 'Something went wrong',
@@ -72,7 +71,11 @@ class _QueryNewsWidgetState extends State<QueryNewsWidget> {
                   );
                 }
               },
-              listener: (BuildContext context, Object? state) {},
+              listener: (BuildContext context, Object? state) {
+                if (state is ExploreFailure) {
+                  showAppSnackBar(context, state.failures.message);
+                }
+              },
             ),
           ],
         ),

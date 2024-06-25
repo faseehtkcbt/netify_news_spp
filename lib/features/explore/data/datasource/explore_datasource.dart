@@ -27,14 +27,17 @@ class ExploreDataSourceImpl implements ExploreDatasource {
       }
       final response = await http.get(Uri.parse(
           '${Constants.everything}?q=$query&apiKey=${Credentials.apiKey}'));
+      print(response.reasonPhrase);
       if (response.statusCode == 200) {
         List<NewsModel> news = [];
         List data = jsonDecode(response.body)['articles'];
         data.map((e) => news.add(NewsModel.fromJson(e))).toList();
         return news;
       } else {
-        throw ServerExceptions(response.reasonPhrase ?? "");
+        throw ServerExceptions(jsonDecode(response.body)['message']);
       }
+    } on ServerExceptions catch (e) {
+      throw ServerExceptions(e.exception);
     } catch (e) {
       throw ServerExceptions(e.toString());
     }
@@ -55,8 +58,10 @@ class ExploreDataSourceImpl implements ExploreDatasource {
         result.map((e) => sources.add(SourceDetailModel.fromJson(e))).toList();
         return sources;
       } else {
-        throw ServerExceptions(response.reasonPhrase ?? "");
+        throw ServerExceptions(jsonDecode(response.body)['message']);
       }
+    } on ServerExceptions catch (e) {
+      throw ServerExceptions(e.exception);
     } catch (e) {
       throw ServerExceptions(e.toString());
     }
@@ -77,8 +82,10 @@ class ExploreDataSourceImpl implements ExploreDatasource {
         result.map((e) => news.add(NewsModel.fromJson(e))).toList();
         return news;
       } else {
-        throw ServerExceptions(response.reasonPhrase ?? "");
+        throw ServerExceptions(jsonDecode(response.body)['message']);
       }
+    } on ServerExceptions catch (e) {
+      throw ServerExceptions(e.exception);
     } catch (e) {
       throw ServerExceptions(e.toString());
     }

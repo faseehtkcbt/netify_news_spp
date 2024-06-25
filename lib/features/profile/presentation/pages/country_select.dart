@@ -4,12 +4,12 @@ import 'package:news_app/core/color_pallette/app_pallette.dart';
 import 'package:news_app/core/utils/app_text.dart';
 import 'package:news_app/core/utils/app_text_form_field.dart';
 import 'package:news_app/core/utils/loader.dart';
-import 'package:news_app/core/utils/network_image.dart';
 import 'package:news_app/core/utils/snackbar.dart';
 import 'package:news_app/features/profile/domain/entity/country_entity.dart';
 import 'package:news_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:news_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:news_app/features/profile/presentation/cubit/search_country_cubit.dart';
+import 'package:news_app/features/profile/presentation/widget/country_list_tile.dart';
 
 import '../../../../config/route/routes.dart';
 import '../../../../core/bloc/selection_cubit/selection_cubit.dart';
@@ -75,7 +75,9 @@ class _CountrySelectState extends State<CountrySelect> {
         body: SafeArea(
             child: BlocConsumer<ProfileBloc, ProfileState>(
           listener: (context, state) {
-            // TODO: implement listener
+            if (state is ProfileError) {
+              showAppSnackBar(context, state.failure.message);
+            }
           },
           builder: (context, state) {
             if (state is ProfileLoaded<List<CountryEntity>>) {
@@ -123,47 +125,29 @@ class _CountrySelectState extends State<CountrySelect> {
                                                 physics:
                                                     const NeverScrollableScrollPhysics(),
                                                 itemBuilder: (context, index) {
-                                                  return ListTile(
-                                                    onTap: () {
-                                                      context
-                                                          .read<
-                                                              SelectionCubit>()
-                                                          .onSelection(index);
-                                                      selectedCountry =
-                                                          searchState
-                                                                  .data[index]
-                                                                  .countryCode ??
-                                                              '';
-                                                    },
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15)),
-                                                    tileColor: selectedState
-                                                                .index ==
-                                                            index
-                                                        ? AppPellete.themeColor
-                                                        : null,
-                                                    leading: NetworkImageUrl(
-                                                        url: searchState
-                                                                .data[index]
-                                                                .flagUrl ??
-                                                            '',
-                                                        height: 20,
-                                                        width: 30),
-                                                    title: AppText(
-                                                      text: searchState
+                                                  return CountryListTile(
+                                                      onTap: () {
+                                                        context
+                                                            .read<
+                                                                SelectionCubit>()
+                                                            .onSelection(index);
+                                                        selectedCountry =
+                                                            searchState
+                                                                    .data[index]
+                                                                    .countryCode ??
+                                                                '';
+                                                      },
+                                                      flagUrl: searchState
+                                                              .data[index]
+                                                              .flagUrl ??
+                                                          '',
+                                                      selected:
+                                                          selectedState.index ==
+                                                              index,
+                                                      countryName: searchState
                                                               .data[index]
                                                               .countryName ??
-                                                          '',
-                                                      textStyle:
-                                                          Theme.of(context)
-                                                              .textTheme
-                                                              .bodyMedium,
-                                                    ),
-                                                  );
+                                                          '');
                                                 },
                                                 separatorBuilder:
                                                     (context, index) =>
@@ -194,7 +178,6 @@ class _CountrySelectState extends State<CountrySelect> {
                 ),
               );
             } else if (state is ProfileError) {
-              showAppSnackBar(context, state.failure.message);
               return Center(
                 child: AppText(
                     text: 'Something went wrong',

@@ -86,6 +86,7 @@ class Constants {
   static const String splashImage_2 = 'assets/images/splash_image_2.png';
   static const String splashImage_3 = 'assets/images/splash_image_3.png';
   static const String demoImage = 'assets/images/download.jpeg';
+  static const String alertGif = 'assets/images/cyberterrorism.gif';
 
   ///-----------------------------------------------------------///
 

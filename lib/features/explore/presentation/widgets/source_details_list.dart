@@ -24,10 +24,13 @@ class _SourceDetailsListState extends State<SourceDetailsList> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SourceBloc, SourceState>(
-      listener: (context, state) {},
-      builder: (context, state) {
+      listener: (context, state) {
         if (state is SourceFailure) {
           showAppSnackBar(context, state.failures.message);
+        }
+      },
+      builder: (context, state) {
+        if (state is SourceFailure) {
           return Center(
               child: AppText(
                   text: 'Something went wrong',

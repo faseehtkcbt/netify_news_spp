@@ -14,7 +14,9 @@ class GetBookmark extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<BookmarkBloc, BookmarkState>(
       listener: (context, state) {
-        // TODO: implement listener
+        if (state is BookmarkError) {
+          showAppSnackBar(context, state.failures.message);
+        } // TODO: implement listener
       },
       builder: (context, state) {
         if (state is BookmarkLoaded) {
@@ -32,7 +34,6 @@ class GetBookmark extends StatelessWidget {
                       text: 'No bookmarked subjects',
                       textStyle: Theme.of(context).textTheme.bodyMedium));
         } else if (state is BookmarkError) {
-          showAppSnackBar(context, state.failures.message);
           return Center(
               child: AppText(
                   text: 'Something went wrong',
